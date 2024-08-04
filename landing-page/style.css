@@ -79,21 +79,46 @@ button.outline {
   margin-bottom: 1rem;
 }
 
-.text-wrapper, .image-wrapper {
+.hero .text-wrapper, .hero .image-wrapper {
   flex: 1;
 }
 
-.image-wrapper {
+.hero .image-wrapper {
   background-color: grey;
   height: 250px;
   display: flex;
 }
 
-.image-wrapper p {
+.hero .image-wrapper p {
   color: white;
   margin: auto
 }
 
-.text-wrapper p {
+.hero .text-wrapper p {
   color: lightgray;
+}
+
+.infos {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.infos h2 {
+  font-size: 2rem;
+}
+
+.infos .container {
+  display: flex;
+  justify-content: center;
+  gap: 64px;
+}
+
+.info {
+  width: 150px;
+}
+
+.info .image-wrapper {
+  border: solid 5px #3882F6;
+  border-radius: 16px;
+  aspect-ratio: 1 / 1;
 }
