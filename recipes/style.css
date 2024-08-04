@@ -1,5 +1,18 @@
+:root {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
 * {
-  font-family:Arial, Helvetica, sans-serif
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  width: 900px;
+  margin: 0 auto;
 }
 
 #heading {
@@ -8,6 +21,8 @@
   font-size: 48px;
   font-weight: 700;
   text-align: center;
+  padding: 12px 0;
+  border-bottom: dashed rgba(0 100 255) 5px;
 }
 
 h2 {
@@ -17,10 +32,13 @@ h2 {
 }
 
 .special {
-  background-color: hsl(62, 100%, 50%)
+  background-color: hsl(62, 100%, 50%);
+  padding: 16px;
 }
 
 img {
   width: 600px;
   height: 400px;
+  display: block;
+  margin: auto;
 }
