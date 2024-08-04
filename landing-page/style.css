@@ -89,11 +89,6 @@ button.outline {
   display: flex;
 }
 
-.hero .image-wrapper p {
-  color: white;
-  margin: auto
-}
-
 .hero .text-wrapper p {
   color: lightgray;
 }
@@ -140,4 +135,26 @@ button.outline {
   font-weight: 700;
   font-size: 1.25rem;
   text-align: right;
+}
+
+.action {
+  padding: 80px;
+}
+
+.action .content {
+  color: white;
+  background-color: #3882F6;
+  padding: 20px 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.action .text-wrapper {
+  flex: 1;
+}
+
+.action p {
+  color: lightgray;
 }
