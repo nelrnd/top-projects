@@ -89,6 +89,10 @@ button.outline {
   display: flex;
 }
 
+.hero .image-wrapper p {
+  margin: auto;
+}
+
 .hero .text-wrapper p {
   color: lightgray;
 }
@@ -157,4 +161,11 @@ button.outline {
 
 .action p {
   color: lightgray;
+}
+
+.footer {
+  background-color: #1F2937;
+  color: white;
+  padding: 24px;
+  text-align: center;
 }
