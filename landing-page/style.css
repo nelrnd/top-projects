@@ -122,3 +122,22 @@ button.outline {
   border-radius: 16px;
   aspect-ratio: 1 / 1;
 }
+
+.quote {
+  background-color: #E5E7EB;
+  padding: 80px;
+}
+
+.quote-text {
+  color: #1F2937;
+  font-size: 2.25rem;
+  font-weight: 200;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.quote-author {
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-align: right;
+}
