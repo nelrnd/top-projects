@@ -19,6 +19,7 @@
   display: flex;
   gap: 1rem;
   justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .row > * {
@@ -40,4 +41,10 @@ h1 {
 button {
   font-size: 2rem;
   padding: 2rem;
+}
+
+.scores {
+  display: flex;
+  justify-content: space-between;
+  text-transform: capitalize;
 }
