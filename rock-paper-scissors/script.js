@@ -15,7 +15,7 @@ function getComputerChoice() {
   }
 }
 
-function displayScore(scoreA, scoreB) {
+function displayScores(scoreA, scoreB) {
   const scores = document.querySelector(".scores");
   const leftText = scores.firstElementChild;
   const rightText = scores.lastElementChild;
@@ -32,6 +32,11 @@ function playGame() {
   let computerScore = 0;
 
   function playRound(humanChoice) {
+    if (humanScore === 5 || computerScore === 5) {
+      humanScore = 0;
+      computerScore = 0;
+      displayScores();
+    }
     const computerChoice = getComputerChoice();
 
     if (
@@ -48,7 +53,17 @@ function playGame() {
       humanScore++;
     }
 
-    displayScore(humanScore, computerScore);
+    displayScores(humanScore, computerScore);
+
+    if (humanScore === 5 || computerScore === 5) {
+      output.textContent = "Game over. ";
+      if (computerScore !== 5) {
+        output.textContent += "You won! ";
+      } else if (humanScore !== 5) {
+        output.textContent += "You lose! ";
+      }
+      output.textContent += "Click to play again.";
+    }
   }
 
   [rockBtn, paperBtn, scissorsBtn].forEach((btn) => {
