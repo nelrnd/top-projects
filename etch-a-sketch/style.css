@@ -9,7 +9,3 @@
   display: flex;
   flex-wrap: wrap;
 }
-
-#grid > div {
-  border: solid 2px black;
-}

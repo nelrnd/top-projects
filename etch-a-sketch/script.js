@@ -10,18 +10,24 @@ function createGrid(gridElem, size) {
     const square = document.createElement("div");
     square.style.width = gridWidth / size + "px";
     square.style.height = gridWidth / size + "px";
+    square.style.opacity = 0;
     gridElem.appendChild(square);
   }
 }
 
 function handleGridHover(event) {
   const target = event.target;
+  const opacity = +target.style.opacity;
 
   if (target.id === "grid") {
     return;
   }
 
-  target.style.backgroundColor = "black";
+  target.style.backgroundColor = getRandomColor();
+
+  if (opacity < 1) {
+    target.style.opacity = opacity + 0.1;
+  }
 }
 
 function handleBtnClick() {
@@ -32,6 +38,20 @@ function handleBtnClick() {
   }
 
   createGrid(grid, size);
+}
+
+function getRandomColor() {
+  const random = Math.floor(Math.random() * 4);
+  switch (random) {
+    case 0:
+      return "#B4D6CD";
+    case 1:
+      return "#FFDA76";
+    case 2:
+      return "#FF8C9E";
+    case 3:
+      return "#FF4E88";
+  }
 }
 
 grid.addEventListener("mouseover", handleGridHover);
