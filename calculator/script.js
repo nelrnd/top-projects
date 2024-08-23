@@ -1,114 +1,165 @@
-function add(a, b) {
-  return a + b;
-}
-
-function substract(a, b) {
-  return a - b;
-}
-
-function multiply(a, b) {
-  return a * b;
-}
-
-function divide(a, b) {
-  return a / b;
-}
-
-let number1 = null;
-let number2 = null;
-let operator = null;
-
-function operate(a, b, operator) {
-  if (!a || !b || !operator) {
-    throw new Error("Cannot run operation, missing arguments");
-  }
-
-  switch (operator) {
-    case "add":
-      return add(a, b);
-    case "substract":
-      return substract(a, b);
-    case "multiply":
-      return multiply(a, b);
-    case "divide":
-      return divide(a, b);
-  }
-}
-
 const display = document.querySelector("#display");
-const numberBtns = document.querySelectorAll(".numbers button");
-const operatorBtns = document.querySelectorAll(".operators button");
-const operateBtn = document.getElementById("operate");
-const clearBtn = document.getElementById("clear");
+const numberButtons = document.querySelectorAll(".numbers button");
+const operatorButtons = document.querySelectorAll(".operators button");
+const operateButton = document.querySelector("button#operate");
+const clearButton = document.querySelector("button#clear");
+const dotButton = document.querySelector("button#dot");
 
-function handleNumberButtonClick(event) {
-  const number = event.target.textContent;
-  if (!operator) {
-    number1 = Number(+number1 + "" + number);
-  } else {
-    number2 = Number(+number2 + "" + number);
-  }
-  populateDisplay(number2 || number1);
+function populateDisplay(text) {
+  display.textContent = text || 0;
 }
 
-function handleOperatorButtonClick(event) {
-  operator = event.target.dataset.operator;
-  populateDisplay();
-}
-
-function handleOperateButtonClick() {
-  if (!number1 || !number2 || !operator) {
-    return;
+class Calculator {
+  constructor() {
+    this.number1 = 0;
+    this.number2 = null;
+    this.operator = null;
   }
 
-  const result = operate(number1, number2, operator);
-  clear();
-  number1 = result;
-  populateDisplay();
+  get complete() {
+    return !!(this.number1 !== null && this.number2 !== null && this.operator);
+  }
+
+  get operationText() {
+    let text = "";
+    if (this.number1 !== null) text += this.number1;
+    if (this.operator) text += " " + this.getOperatorSymbol(this.operator);
+    if (this.number2 !== null) text += " " + this.number2;
+    return text;
+  }
+
+  add(a = this.number1, b = this.number2) {
+    return a + b;
+  }
+
+  substract(a = this.number1, b = this.number2) {
+    return a - b;
+  }
+
+  multiply(a = this.number1, b = this.number2) {
+    return a * b;
+  }
+
+  divide(a = this.number1, b = this.number2) {
+    return a / b;
+  }
+
+  operate() {
+    if (!this.complete) {
+      console.log("Cannot run operation, operation incomplete");
+      return;
+    }
+
+    const number1 = Number(this.number1);
+    const number2 = Number(this.number2);
+    let result;
+
+    switch (this.operator) {
+      case "add":
+        result = this.add(number1, number2);
+        break;
+      case "substract":
+        result = this.substract(number1, number2);
+        break;
+      case "multiply":
+        result = this.multiply(number1, number2);
+        break;
+      case "divide":
+        result = this.divide(number1, number2);
+        break;
+    }
+
+    // clear result
+    result = Math.trunc(result * 100) / 100;
+
+    if (result === Infinity) {
+      console.log("something went wrong 😛");
+      result = 0;
+    }
+
+    this.clear();
+    this.number1 = result;
+
+    return result;
+  }
+
+  clear() {
+    this.number1 = 0;
+    this.number2 = null;
+    this.operator = null;
+  }
+
+  getOperatorSymbol(operator = this.operator) {
+    switch (operator) {
+      case "add":
+        return "+";
+      case "substract":
+        return "-";
+      case "multiply":
+        return "x";
+      case "divide":
+        return "÷";
+    }
+  }
+
+  addNumber(number) {
+    if (!this.operator) {
+      this.number1 = Number((this.number1 || "") + "" + number);
+    } else {
+      this.number2 = Number((this.number2 || "") + "" + number);
+    }
+  }
+
+  addOperator(operator) {
+    if (this.complete) {
+      const result = this.operate();
+      this.clear();
+      this.number1 = result;
+    }
+    this.operator = operator;
+  }
+
+  addDot() {
+    if (!this.operator) {
+      if (!String(this.number1).includes(".")) {
+        this.number1 = (this.number1 || 0) + ".";
+      }
+    } else {
+      if (!String(this.number2).includes(".")) {
+        this.number2 = (this.number2 || 0) + ".";
+      }
+    }
+  }
 }
 
-function clear() {
-  number1 = null;
-  number2 = null;
-  operator = null;
-  populateDisplay();
-}
+const calculator = new Calculator();
 
-function populateDisplay() {
-  let text = 0;
-  if (number1) {
-    text = number1;
-  }
-  if (operator) {
-    text += " " + getOperatorSymbol(operator);
-  }
-  if (number2) {
-    text += " " + number2;
-  }
-  display.textContent = text;
-}
-
-function getOperatorSymbol(operator) {
-  switch (operator) {
-    case "add":
-      return "+";
-    case "substract":
-      return "-";
-    case "multiply":
-      return "x";
-    case "divide":
-      return "÷";
-  }
-}
-
-numberBtns.forEach((button) => {
-  button.addEventListener("click", handleNumberButtonClick);
+numberButtons.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    const number = event.target.textContent;
+    calculator.addNumber(number);
+  });
 });
 
-operatorBtns.forEach((button) => {
-  button.addEventListener("click", handleOperatorButtonClick);
+operatorButtons.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    const { operator } = event.target.dataset;
+    calculator.addOperator(operator);
+  });
 });
 
-operateBtn.addEventListener("click", handleOperateButtonClick);
+dotButton.addEventListener("click", () => calculator.addDot());
+operateButton.addEventListener("click", () => calculator.operate());
+clearButton.addEventListener("click", () => calculator.clear());
 
-clearBtn.addEventListener("click", clear);
+[
+  ...numberButtons,
+  ...operatorButtons,
+  operateButton,
+  clearButton,
+  dotButton,
+].forEach((button) =>
+  button.addEventListener("click", () => {
+    populateDisplay(calculator.operationText);
+  }),
+);
