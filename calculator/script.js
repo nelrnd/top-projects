@@ -3,6 +3,7 @@ const numberButtons = document.querySelectorAll(".numbers button");
 const operatorButtons = document.querySelectorAll(".operators button");
 const operateButton = document.querySelector("button#operate");
 const clearButton = document.querySelector("button#clear");
+const backButton = document.querySelector("button#back");
 const dotButton = document.querySelector("button#dot");
 
 function populateDisplay(text) {
@@ -130,6 +131,24 @@ class Calculator {
       }
     }
   }
+
+  goBack() {
+    if (this.number2) {
+      if (String(this.number2).length === 1) {
+        this.number2 = null;
+      } else {
+        this.number2 = Number(String(this.number2).slice(0, -1));
+      }
+    } else if (this.operator) {
+      this.operator = null;
+    } else {
+      if (String(this.number1).length === 1) {
+        this.number1 = null;
+      } else {
+        this.number1 = Number(String(this.number1).slice(0, -1));
+      }
+    }
+  }
 }
 
 const calculator = new Calculator();
@@ -151,12 +170,14 @@ operatorButtons.forEach((button) => {
 dotButton.addEventListener("click", () => calculator.addDot());
 operateButton.addEventListener("click", () => calculator.operate());
 clearButton.addEventListener("click", () => calculator.clear());
+backButton.addEventListener("click", () => calculator.goBack());
 
 [
   ...numberButtons,
   ...operatorButtons,
   operateButton,
   clearButton,
+  backButton,
   dotButton,
 ].forEach((button) =>
   button.addEventListener("click", () => {
