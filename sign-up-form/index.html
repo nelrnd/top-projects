@@ -9,6 +9,56 @@
   </head>
 
   <body>
-    <h1>Sign-up form</h1>
+    <h1>Create an account</h1>
+
+    <p class="lead">
+      Discover the amazing power behind the most advanced and complete app ever.
+      Trusted by more +50M people, leverage the possibilities of AI to create
+      endless opportunities.
+    </p>
+
+    <form action="" method="POST">
+      <div class="form-row">
+        <div class="form-col">
+          <label for="first-name">First name</label>
+          <input type="text" id="first-name" name="first-name" required>
+        </div>
+        <div class="form-col">
+          <label for="last-name">Last name</label>
+          <input type="text" id="last-name" name="last-name" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-col">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-col">
+          <label for="phone">Phone number</label>
+          <input type="tel" id="phone" name="phone-number">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-col">
+          <label for="pwd">Password</label>
+          <input
+            type="password"
+            id="pwd"
+            name="password"
+            required
+            minlength="8"
+          >
+        </div>
+        <div class="form-col">
+          <label for="pwd-confirm">Confirm password</label>
+          <!-- no name as password match will be handled on client side -->
+          <input type="password" id="pwd-confirm" required minlength="8">
+        </div>
+      </div>
+      <div class="form-row">
+        <button>Create an account</button>
+      </div>
+    </form>
+    <p>Already have an account? <a href="#">Log in</a></p>
   </body>
 </html>
