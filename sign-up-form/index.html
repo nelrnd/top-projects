@@ -9,56 +9,111 @@
   </head>
 
   <body>
-    <h1>Create an account</h1>
+    <div class="col left-col">
+      <div class="banner">
+        <img src="./logo.svg">
+        <span>KABUM</span>
+      </div>
 
-    <p class="lead">
-      Discover the amazing power behind the most advanced and complete app ever.
-      Trusted by more +50M people, leverage the possibilities of AI to create
-      endless opportunities.
-    </p>
+      <p class="credits">
+        Photo by
+        <a
+          href="https://unsplash.com/@ferparmur"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Fernando Paredes Murillo</a
+        >
+        on
+        <a
+          href="https://unsplash.com/photos/desert-photography-during-daytime-Xc6gtOwSMSA"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Unsplash</a
+        >
+      </p>
+    </div>
 
-    <form action="" method="POST">
-      <div class="form-row">
-        <div class="form-col">
-          <label for="first-name">First name</label>
-          <input type="text" id="first-name" name="first-name" required>
-        </div>
-        <div class="form-col">
-          <label for="last-name">Last name</label>
-          <input type="text" id="last-name" name="last-name" required>
-        </div>
+    <div class="col right-col">
+      <div class="right-col-content">
+        <header>
+          <h1 class="headline">Create an account</h1>
+          <p class="lead">
+            Discover the amazing power behind the most advanced and complete app
+            ever. Trusted by more +50M people, leverage the possibilities of AI
+            to create endless opportunities.
+          </p>
+        </header>
+
+        <form action="" method="POST">
+          <div class="form-row">
+            <div class="form-col">
+              <label for="first-name">First name</label>
+              <input
+                type="text"
+                id="first-name"
+                name="first-name"
+                placeholder=""
+                required
+              >
+            </div>
+            <div class="form-col">
+              <label for="last-name">Last name</label>
+              <input
+                type="text"
+                id="last-name"
+                name="last-name"
+                placeholder=""
+                required
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder=""
+                required
+              >
+            </div>
+            <div class="form-col">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" name="phone-number">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-col">
+              <label for="pwd">Password</label>
+              <input
+                type="password"
+                id="pwd"
+                name="password"
+                placeholder=""
+                required
+                minlength="8"
+              >
+            </div>
+            <div class="form-col">
+              <label for="pwd-confirm">Confirm password</label>
+              <!-- no name as password match will be handled on client side -->
+              <input
+                type="password"
+                id="pwd-confirm"
+                placeholder=""
+                required
+                minlength="8"
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <button>Create an account</button>
+          </div>
+        </form>
+
+        <p>Already have an account? <a href="#">Log in</a></p>
       </div>
-      <div class="form-row">
-        <div class="form-col">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-col">
-          <label for="phone">Phone number</label>
-          <input type="tel" id="phone" name="phone-number">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-col">
-          <label for="pwd">Password</label>
-          <input
-            type="password"
-            id="pwd"
-            name="password"
-            required
-            minlength="8"
-          >
-        </div>
-        <div class="form-col">
-          <label for="pwd-confirm">Confirm password</label>
-          <!-- no name as password match will be handled on client side -->
-          <input type="password" id="pwd-confirm" required minlength="8">
-        </div>
-      </div>
-      <div class="form-row">
-        <button>Create an account</button>
-      </div>
-    </form>
-    <p>Already have an account? <a href="#">Log in</a></p>
+    </div>
   </body>
 </html>
