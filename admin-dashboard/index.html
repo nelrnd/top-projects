@@ -15,7 +15,7 @@
   </head>
 
   <body>
-    <div class="sidebar">
+    <div class="sidebar card">
       <div class="logo">
         <img src="./assets/icons/logo.svg" alt="">
         <h2>Sentryko</h2>
@@ -105,7 +105,30 @@
       </div>
     </div>
 
-    <div class="header"></div>
+    <div class="header card">
+      <form action="" method="get">
+        <input type="search" name="search-term" placeholder="Search">
+        <button aria-label="Search" class="btn primary">
+          <img src="./assets/icons/search.svg" alt="">
+        </button>
+      </form>
+
+      <button aria-label="messages" class="btn secondary">
+        <img src="./assets/icons/mail.svg" alt="">
+      </button>
+
+      <button aria-label="notifications" class="btn secondary">
+        <img src="./assets/icons/bell.svg" alt="">
+      </button>
+
+      <div class="profile">
+        <div class="avatar"></div>
+        <div>
+          <div>Puka Kolumbo</div>
+          <div>Sales manager</div>
+        </div>
+      </div>
+    </div>
 
     <div class="revenue"></div>
 
