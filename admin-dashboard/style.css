@@ -1,3 +1,55 @@
-h1 {
-  color: blue;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: #3c81f6;
+  --bg-color: #eff1f6;
+  --card-color: #ffffff;
+
+  height: 100%;
+}
+
+body {
+  font-family: "Inter", system-ui;
+  font-optical-sizing: auto;
+  height: 100%;
+  background-color: var(--bg-color);
+
+  display: grid;
+  grid-template-columns: 360px 1fr 1fr 400px;
+  gap: 1.5rem;
+}
+
+body > * {
+  background-color: var(--card-color);
+  border-radius: 1.5rem;
+}
+
+.sidebar {
+  grid-row: 1 / 5;
+}
+
+.header {
+  grid-column: 2 / -1;
+}
+
+.revenue {
+  grid-column: 2 / 4;
+}
+
+.orders {
+  grid-column: 2 / 4;
+}
+
+.products {
+  grid-column: 4 / 5;
+  grid-row: 2 / 3;
+}
+
+.traffic {
+  grid-column: 4 / 5;
+  grid-row: 3 / 5;
 }
