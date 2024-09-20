@@ -4,15 +4,16 @@ h1 {
 }
 
 table {
-  display: block;
-  width: 100%;
+  display: grid;
+  width: fit-content;
+  grid-template-columns: repeat(5, 200px);
   border-collapse: collapse;
   border: solid 1px black;
 }
 
 thead,
 tbody {
-  display: block;
+  display: contents;
 }
 
 th,
@@ -23,6 +24,5 @@ td {
 }
 
 tr {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: contents;
 }
