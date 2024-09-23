@@ -8,7 +8,29 @@
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
-    <h1>Tic Tac Toe</h1>
+    <div class="container">
+      <h1>Tic Tac Toe</h1>
+  
+      <div id="status"></div>
+      <button id="restart" class="hidden">Restart</button>
+      <div id="board"></div>
+      <table id="scores"></table>  
+    </div>
+
+    <dialog id="dialog">
+      <form id="names-form">
+        <div>
+          <label for="player-1">First player name:</label>
+          <input type="text" id="player-1" name="first-player-name">
+        </div>
+        <div>
+          <label for="player-2">Second player name:</label>
+          <input type="text" id="player-2" name="second-player-name">
+        </div>
+        <button type="submit">Play</button>
+      </form>
+    </dialog>
+
     <script src="./script.js"></script>
   </body>
 </html>

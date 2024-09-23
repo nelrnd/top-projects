@@ -26,6 +26,10 @@ const Gameboard = (function() {
     [0, 0, 1, 0, 1, 0, 1, 0, 0]
   ]
 
+  function getBoard() {
+    return [...board]
+  }
+
   function isEmpty(index) {
     return board[index] === null
   }
@@ -58,7 +62,7 @@ const Gameboard = (function() {
     board.fill(null)
   }
 
-  return { isEmpty, isTied, placeMark, getWinner, reset }
+  return { getBoard, isEmpty, isTied, placeMark, getWinner, reset }
 })()
 
 const Game = (function() {
@@ -80,11 +84,10 @@ const Game = (function() {
       console.log("Cannot start game without 2 players")
     }
     Gameboard.reset()
-    displayTurnPlayer()
-  }
 
-  function displayTurnPlayer() {
-    console.log(`It's ${players[turn].name} turn.`)
+    DisplayController.displayStatus(`It's ${players[turn].name} turn.`)
+    DisplayController.displayBoard(Gameboard.getBoard())
+    DisplayController.displayScores(players)
   }
 
   function play(index) {
@@ -93,6 +96,7 @@ const Game = (function() {
       console.error("Square is already taken, chose another one")
     } else {
       Gameboard.placeMark(index, players[turn].mark)
+      DisplayController.displayMark(index, players[turn].mark)
       switchTurn()
       
       const winnerMark = Gameboard.getWinner()
@@ -101,7 +105,7 @@ const Game = (function() {
       } else if (Gameboard.isTied()) {
         endGame()
       } else {
-        displayTurnPlayer()
+        DisplayController.displayStatus(`It's ${players[turn].name} turn.`)
       }
     }
   }
@@ -111,40 +115,88 @@ const Game = (function() {
   }
 
   function endGame(winnerMark) {
+    DisplayController.handleEndGame()
     if (winnerMark) {
       const winner = players.find((player) => player.mark === winnerMark)
       winner.updateScore()
-      console.log(`Game over! ${winner.name} won!`)
-      displayScores()
+      DisplayController.displayStatus(`Game over! ${winner.name} won!`)
+      DisplayController.displayScores(players)
     } else {
-      console.log(`Game over! It was a tie!`)
+      DisplayController.displayStatus(`Game over! It was a tie!`)
     }
-  }
-
-  function displayScores() {
-    const longestName = players.sort((a, b) => b.name.length - a.name.length)[0].name
-    const textLength = longestName.length + 5
-    players.forEach((player) => {
-      const name = player.name
-      const score = player.getScore()
-      const start = name.padEnd(textLength - String(score).length, ".")
-      const text = start + score
-      console.log(text)
-    })
   }
 
   return { addPlayer, start, play }
 })()
 
-Game.addPlayer("Nel", "X")
-Game.addPlayer("Kof", "O")
-Game.start()
-Game.play(0)
-Game.play(1)
-Game.play(2)
-Game.play(4)
-Game.play(3)
-Game.play(6)
-Game.play(5)
-Game.play(8)
-Game.play(7)
+const DisplayController = (function() {
+  const statusElem = document.getElementById("status")
+  const boardElem = document.getElementById("board")
+  const scoresElem = document.getElementById("scores")
+  const dialogElem = document.getElementById("dialog")
+  const namesForm = document.getElementById("names-form")
+  const restartBtn = document.getElementById("restart")
+
+  function displayStatus(message) {
+    statusElem.textContent = message
+  }
+
+  function displayBoard(board) {
+    boardElem.innerHTML = null
+    board.forEach((square, index) => {
+      const button = document.createElement("button")
+      button.textContent = square
+      button.onclick = () => Game.play(index)
+      boardElem.appendChild(button)
+    })
+  }
+
+  function displayScores(players) {
+    scoresElem.innerHTML = null
+    const thead = scoresElem.createTHead()
+    const headRow = thead.insertRow()
+    const tbody = scoresElem.createTBody()
+    const bodyRow = tbody.insertRow()
+    players.forEach((player) => {
+      const th = document.createElement("th")
+      th.textContent = player.name
+      headRow.appendChild(th)
+      const cell = bodyRow.insertCell()
+      cell.textContent = player.getScore()
+    })
+  }
+  
+  function handleFormSubmit(event) {
+    event.preventDefault()
+    const formData = new FormData(event.target)
+    const firstPlayerName = formData.get("first-player-name")
+    const secondPlayerName = formData.get("second-player-name")
+    Game.addPlayer(firstPlayerName, "X")
+    Game.addPlayer(secondPlayerName, "O")
+    Game.start()
+    namesForm.reset()
+    dialog.close()
+  }
+
+  function displayMark(index, mark) {
+    const button = boardElem.childNodes[index]
+    button.textContent = mark
+    button.disabled = true
+  }
+
+  function handleEndGame() {
+    Array.from(boardElem.childNodes).forEach((button) => button.disabled = true)
+    restartBtn.classList.remove("hidden")
+  }
+
+  namesForm.addEventListener("submit", handleFormSubmit)
+
+  restartBtn.addEventListener("click", () => {
+    Game.start()
+    restartBtn.classList.add("hidden")
+  })
+
+  dialogElem.showModal()
+
+  return { displayStatus, displayBoard, displayScores, displayMark, handleEndGame }
+})()
