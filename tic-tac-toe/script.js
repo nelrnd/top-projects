@@ -12,7 +12,7 @@ function createPlayer(name, mark) {
   return { name, mark, getScore, updateScore }
 }
 
-const gameboard = (function() {
+const Gameboard = (function() {
   const board = new Array(9).fill(null)
 
   const winningPatterns = [
@@ -28,6 +28,10 @@ const gameboard = (function() {
 
   function isEmpty(index) {
     return board[index] === null
+  }
+
+  function isTied() {
+    return board.every((square) => square !== null)
   }
 
   function placeMark(index, mark) {
@@ -54,10 +58,10 @@ const gameboard = (function() {
     board.fill(null)
   }
 
-  return { isEmpty, placeMark, getWinner, reset }
+  return { isEmpty, isTied, placeMark, getWinner, reset }
 })()
 
-const game = (function() {
+const Game = (function() {
   const players = []
   let turn = 0
 
@@ -75,7 +79,7 @@ const game = (function() {
     if (players.length < 2) {
       console.log("Cannot start game without 2 players")
     }
-    gameboard.reset()
+    Gameboard.reset()
     displayTurnPlayer()
   }
 
@@ -84,20 +88,21 @@ const game = (function() {
   }
 
   function play(index) {
-    let turnValid = gameboard.isEmpty(index)
+    let turnValid = Gameboard.isEmpty(index)
     if (turnValid === false) {
       console.error("Square is already taken, chose another one")
     } else {
-      gameboard.placeMark(index, players[turn].mark)
+      Gameboard.placeMark(index, players[turn].mark)
       switchTurn()
-
-      const winnerMark = gameboard.getWinner()
+      
+      const winnerMark = Gameboard.getWinner()
       if (winnerMark) {
         endGame(winnerMark)
+      } else if (Gameboard.isTied()) {
+        endGame()
       } else {
         displayTurnPlayer()
       }
-
     }
   }
 
@@ -106,10 +111,14 @@ const game = (function() {
   }
 
   function endGame(winnerMark) {
-    const winner = players.find((player) => player.mark === winnerMark)
-    winner.updateScore()
-    console.log(`Game over! ${winner.name} won!`)
-    displayScores()
+    if (winnerMark) {
+      const winner = players.find((player) => player.mark === winnerMark)
+      winner.updateScore()
+      console.log(`Game over! ${winner.name} won!`)
+      displayScores()
+    } else {
+      console.log(`Game over! It was a tie!`)
+    }
   }
 
   function displayScores() {
@@ -127,11 +136,15 @@ const game = (function() {
   return { addPlayer, start, play }
 })()
 
-game.addPlayer("Nel", "X")
-game.addPlayer("Kof", "O")
-game.start()
-game.play(0)
-game.play(3)
-game.play(1)
-game.play(4)
-game.play(2)
+Game.addPlayer("Nel", "X")
+Game.addPlayer("Kof", "O")
+Game.start()
+Game.play(0)
+Game.play(1)
+Game.play(2)
+Game.play(4)
+Game.play(3)
+Game.play(6)
+Game.play(5)
+Game.play(8)
+Game.play(7)
