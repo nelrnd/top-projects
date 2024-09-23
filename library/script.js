@@ -1,76 +1,82 @@
-const myLibrary = [];
 const table = document.querySelector("tbody");
 const dialog = document.querySelector("dialog");
 const form = document.querySelector("form");
-const openBtn = document.querySelector("button#open");
-const closeBtn = document.querySelector("button#close");
+const openButton = document.querySelector("button#open");
+const closeButton = document.querySelector("button#close");
 
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title
+    this.author = author
+    this.pages = pages
+    this.read = read
+  }
+
+  toggleRead() {
+    this.read = !this.read
+  }
 }
 
-Book.prototype.toggleRead = function () {
-  this.read = !this.read;
-};
+class Library {
+  constructor() {
+    this.books = []
+  }
 
-function addBookToLibrary(title, author, pages, read) {
-  const book = new Book(title, author, pages, read);
-  myLibrary.push(book);
-}
+  addBook(title, author, pages, read) {
+    const book = new Book(title, author, pages, read)
+    this.books.push(book)
+    this.#display()
+  }
 
-function displayLibrary() {
-  table.innerHTML = null;
-
-  myLibrary.forEach((book) => {
-    const row = document.createElement("tr");
-
-    for (const prop in book) {
-      if (book.hasOwnProperty(prop)) {
-        let cell;
+  #display() {
+    table.innerHTML = null
+    this.books.forEach((book) => {
+      const row = table.insertRow()
+      for (const prop in book) {
+        let cell
         if (prop === "title") {
-          cell = document.createElement("th");
-          cell.setAttribute("scope", "row");
+          cell = document.createElement("th")
+          cell.setAttribute("scope", "row")
+          row.appendChild(cell)
         } else {
-          cell = document.createElement("td");
+          cell = row.insertCell()
         }
 
         if (prop === "read") {
-          const btn = document.createElement("button");
-          btn.textContent = book[prop] ? "Yes" : "No";
-          btn.addEventListener("click", () => {
-            book.toggleRead();
-            displayLibrary();
-          });
-          cell.appendChild(btn);
+          const button = document.createElement("button")
+          button.textContent = book[prop] ? "Yes" : "No"
+          button.onclick = () => {
+            book.toggleRead()
+            this.#display()
+          }
+          cell.appendChild(button)
         } else {
-          cell.textContent = book[prop];
+          cell.textContent = book[prop]
         }
-
-        row.appendChild(cell);
       }
-    }
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete";
-    deleteBtn.addEventListener("click", () => {
-      const bookIndex = myLibrary.findIndex((b) => b === book);
-      myLibrary.splice(bookIndex, 1);
-      table.removeChild(row);
-    });
-    row.appendChild(deleteBtn);
-
-    table.appendChild(row);
-  });
+      const deleteButton = document.createElement("button")
+      deleteButton.textContent = "Delete"
+      deleteButton.onclick = () => {
+        const bookIndex = this.books.indexOf(book)
+        this.books.splice(bookIndex, 1)
+        this.#display()
+      }
+      row.appendChild(deleteButton)
+      table.appendChild(row)
+    })
+  }
 }
 
-openBtn.addEventListener("click", () => {
+const library = new Library()
+library.addBook("The Kybalion", "	William Walker Atkinson", 223, false)
+library.addBook("How to Win Friends and Influence People", "Dale Carnegie",  291, false,)
+library.addBook("Psycho-Cybernetics", "Maxwell Maltz", 336, true)
+
+openButton.addEventListener("click", () => {
   dialog.showModal();
 });
 
-closeBtn.addEventListener("click", () => {
+closeButton.addEventListener("click", () => {
   dialog.close();
 });
 
@@ -83,19 +89,8 @@ form.addEventListener("submit", (event) => {
   const pages = formData.get("pages");
   const read = formData.get("read");
 
-  addBookToLibrary(title, author, Number(pages), Boolean(read));
-  displayLibrary();
+  library.addBook(title, author, Number(pages), Boolean(read));
 
   form.reset();
   dialog.close();
 });
-
-addBookToLibrary("The Kybalion", "	William Walker Atkinson", 223, false);
-addBookToLibrary(
-  "How to Win Friends and Influence People",
-  "Dale Carnegie",
-  291,
-  false,
-);
-addBookToLibrary("Psycho-Cybernetics", "Maxwell Maltz", 336, true);
-displayLibrary();
