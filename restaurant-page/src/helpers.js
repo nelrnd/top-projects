@@ -5,9 +5,13 @@ export function create(tagName, content, className) {
   return elem
 }
 
-export function addTo(parentElem) {
-  return function (childElem) {
+export function addTo(parentElem, childElem) {
+  if (childElem) {
     parentElem.appendChild(childElem)
+  } else {
+    return function (childElem) {
+      parentElem.appendChild(childElem)
+    }
   }
 }
 

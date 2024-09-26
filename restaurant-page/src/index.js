@@ -1,15 +1,16 @@
 import { displayTo } from "./helpers.js"
-import { createHome } from "./home.js"
+import { createHome } from "./pages/home.js"
+import { createMenu } from "./pages/menu.js"
+import { createAbout } from "./pages/about.js"
+import { createContact } from "./pages/contact.js"
 
 const menu = document.querySelector("nav")
 const content = document.getElementById("content")
 
 const display = displayTo(content)
 
-menu.addEventListener("click", (event) => {
-  const target = event.target
-
-  switch(target.id) {
+function switchTab(tab) {
+  switch(tab) {
     case "home":
       const home = createHome()
       display(home)
@@ -27,6 +28,11 @@ menu.addEventListener("click", (event) => {
       display(contact)
       break
   }
+}
+
+menu.addEventListener("click", (event) => {
+  const target = event.target
+  switchTab(target.id)
 })
 
 window.addEventListener("load", () => {
