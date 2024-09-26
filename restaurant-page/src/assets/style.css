@@ -1,0 +1,12 @@
+nav button {
+  border: none;
+  background-color: transparent;
+  font-size: 100%;
+  cursor: pointer;
+  padding: 0 1rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+

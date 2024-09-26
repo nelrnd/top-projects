@@ -3,6 +3,7 @@ import { createHome } from "./pages/home.js"
 import { createMenu } from "./pages/menu.js"
 import { createAbout } from "./pages/about.js"
 import { createContact } from "./pages/contact.js"
+import "./assets/style.css"
 
 const menu = document.querySelector("nav")
 const content = document.getElementById("content")
