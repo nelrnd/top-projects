@@ -18,4 +18,12 @@ module.exports = {
       template: "./src/template.html",
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.(svg|png|jpg|jpeg|gif)$/i,
+        type: "asset/resource"
+      }
+    ]
+  }
 }
