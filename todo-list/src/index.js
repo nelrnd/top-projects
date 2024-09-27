@@ -4,18 +4,10 @@ import "./style.css"
 
 const menuElem = document.getElementById("menu")
 const listElem = document.getElementById("list")
-console.log(listElem)
 
 export const controller = new Controller(menuElem, listElem)
 
-Task.create("hello")
-Task.create("world")
-Task.create("daz")
-
-controller.displayTasks(tasks) 
-
-
-
+controller.displayTasks(tasks)
 
 // DOM related
 
@@ -25,3 +17,10 @@ const allListBtn = document.getElementById("btn-all")
 listFormElem.addEventListener("submit", controller.handleListFormSubmit)
 taskFormElem.addEventListener("submit", controller.handleTaskFormSubmit)
 allListBtn.addEventListener("click", () => controller.displayTasks(tasks))
+
+
+// Quick util
+
+export function capitalize(string) {
+  return string.at(0).toUpperCase() + string.slice(1).toLowerCase()
+}

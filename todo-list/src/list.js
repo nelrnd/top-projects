@@ -17,7 +17,7 @@ class List {
   }
 
   get tasks() {
-    return tasks.filter((task) => task.listId === this.id)
+    return tasks.filter((task) => task.list === this.id)
   }
 }
 

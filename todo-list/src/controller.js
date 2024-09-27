@@ -29,13 +29,41 @@ class Controller {
     this.menuElem.appendChild(listElem)
     // display list in select options
     const listOptionElem = this.createListOption(list)
-    const select = document.querySelector("#list-form select")
+    const select = document.querySelector("#task-list")
     select.appendChild(listOptionElem)
   }
 
   createTask(task) {
-    const elem = document.createElement("div")
-    elem.textContent = task.title
+    const elem = document.createElement("details")
+    const frontLine = document.createElement("summary")
+    const expanded = document.createElement("div")
+    const checkbox = document.createElement("input")
+    const title = document.createTextNode(task.title)
+    const info = document.createElement("p")
+    const desc = document.createElement("p")
+    const button = document.createElement("button")
+
+    elem.classList.add("task")
+    elem.setAttribute("data-id", task.id)
+    checkbox.setAttribute("type", "checkbox")
+    if (task.done) {
+      checkbox.setAttribute("checked", true)
+    }
+
+    info.textContent = task.info
+    desc.textContent = task.desc
+    button.textContent = "Delete"
+
+    button.onclick = task.delete.bind(task)
+
+    frontLine.appendChild(checkbox)
+    frontLine.appendChild(title)
+    expanded.appendChild(info)
+    expanded.appendChild(desc)
+    expanded.appendChild(button)
+    elem.appendChild(frontLine)
+    elem.appendChild(expanded)
+
     return elem
   }
 
@@ -51,12 +79,16 @@ class Controller {
     }
   }
 
+  removeTask(task) {
+    const taskElem = document.querySelector(`.task[data-id="${task.id}"`)
+    taskElem.remove()
+  }
+
   handleListFormSubmit(event) {
     event.preventDefault()
     const form = event.target
     const formData = new FormData(form)
     const title = formData.get("list-title")
-    console.log(title)
     List.create(title)
     form.reset()
   }
@@ -69,8 +101,8 @@ class Controller {
     const desc = formData.get("desc")
     const dueDate = formData.get("due-date")
     const priority = formData.get("priority")
-    console.log({title, desc, dueDate, priority})
-    Task.create(title, desc, dueDate, priority)
+    const list = formData.get("list")
+    Task.create(title, desc, dueDate, priority, list)
     form.reset()
   }
 }

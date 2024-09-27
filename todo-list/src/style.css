@@ -5,3 +5,7 @@ h1 {
 form {
   border: solid 1px gray;
 }
+
+.task {
+  border: solid 1px gray;
+}
