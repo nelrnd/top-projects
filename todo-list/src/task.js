@@ -5,8 +5,8 @@ import { capitalize, controller } from "./index.js"
 const tasks = []
 
 class Task {
-  constructor(title, desc, dueDate, priority, list) {
-    this.id = uuidv4()
+  constructor({ id, title, desc, dueDate, priority, list }) {
+    this.id = id || uuidv4()
     this.done = false
     this.title = title
     this.desc = desc
@@ -15,10 +15,11 @@ class Task {
     this.list = list
   }
 
-  static create(title, desc, dueDate, priority, list) {
-    const task = new Task(title, desc, dueDate, priority, list)
+  static create({ id, title, desc, dueDate, priority, list }) {
+    const task = new Task({ id, title, desc, dueDate, priority, list })
     tasks.push(task)
     controller.displayTask(task)
+    controller.saveDataInStorage()
   }
 
   get info() {
@@ -35,10 +36,16 @@ class Task {
     return info
   }
 
+  toggleDone() {
+    this.done = !this.done
+    controller.saveDataInStorage()
+  }
+
   delete() {
     const taskIndex = tasks.findIndex((task) => task.id === this.id)
     tasks.splice(taskIndex, 1)
     controller.removeTask(this)
+    controller.saveDataInStorage()
   }
 }
 

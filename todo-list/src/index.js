@@ -18,6 +18,7 @@ listFormElem.addEventListener("submit", controller.handleListFormSubmit)
 taskFormElem.addEventListener("submit", controller.handleTaskFormSubmit)
 allListBtn.addEventListener("click", () => controller.displayTasks(tasks))
 
+window.addEventListener("DOMContentLoaded", controller.loadStorageData)
 
 // Quick util
 

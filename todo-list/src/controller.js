@@ -1,5 +1,5 @@
-import List from "./list.js"
-import Task from "./task.js"
+import List, { lists } from "./list.js"
+import Task, { tasks } from "./task.js"
 
 class Controller {
   constructor(menuElem, listElem) {
@@ -55,6 +55,7 @@ class Controller {
     button.textContent = "Delete"
 
     button.onclick = task.delete.bind(task)
+    checkbox.onchange = task.toggleDone.bind(task)
 
     frontLine.appendChild(checkbox)
     frontLine.appendChild(title)
@@ -89,7 +90,7 @@ class Controller {
     const form = event.target
     const formData = new FormData(form)
     const title = formData.get("list-title")
-    List.create(title)
+    List.create({ title })
     form.reset()
   }
 
@@ -102,8 +103,28 @@ class Controller {
     const dueDate = formData.get("due-date")
     const priority = formData.get("priority")
     const list = formData.get("list")
-    Task.create(title, desc, dueDate, priority, list)
+    Task.create({ title, desc, dueDate, priority, list })
     form.reset()
+  }
+
+  saveDataInStorage() {
+    localStorage.setItem("lists", JSON.stringify(lists))
+    localStorage.setItem("tasks", JSON.stringify(tasks))
+  }
+
+  loadStorageData() {
+    const lists = JSON.parse(localStorage.getItem("lists"))
+    const tasks = JSON.parse(localStorage.getItem("tasks"))
+    if (lists.length) {
+      for (const list of lists) {
+        List.create({ ... list })
+      }
+    }
+    if (tasks.length) {
+      for (const task of tasks) {
+        Task.create({ ...task })
+      }
+    }
   }
 }
 
