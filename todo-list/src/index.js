@@ -1,4 +1,4 @@
-import Task, { tasks } from "./task.js"
+import { tasks } from "./task.js"
 import Controller from "./controller"
 import "./style.css"
 
