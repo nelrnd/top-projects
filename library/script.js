@@ -1,8 +1,8 @@
-const table = document.querySelector("tbody");
-const dialog = document.querySelector("dialog");
-const form = document.querySelector("form");
-const openButton = document.querySelector("button#open");
-const closeButton = document.querySelector("button#close");
+const table = document.querySelector("tbody")
+const dialog = document.querySelector("dialog")
+const form = document.querySelector("form")
+const openButton = document.querySelector("button#open")
+const closeButton = document.querySelector("button#close")
 
 class Book {
   constructor(title, author, pages, read) {
@@ -69,28 +69,86 @@ class Library {
 
 const library = new Library()
 library.addBook("The Kybalion", "	William Walker Atkinson", 223, false)
-library.addBook("How to Win Friends and Influence People", "Dale Carnegie",  291, false,)
+library.addBook(
+  "How to Win Friends and Influence People",
+  "Dale Carnegie",
+  291,
+  false,
+)
 library.addBook("Psycho-Cybernetics", "Maxwell Maltz", 336, true)
 
 openButton.addEventListener("click", () => {
-  dialog.showModal();
-});
+  dialog.showModal()
+})
 
 closeButton.addEventListener("click", () => {
-  dialog.close();
-});
+  dialog.close()
+})
 
 form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const form = event.target;
-  const formData = new FormData(form);
-  const title = formData.get("title");
-  const author = formData.get("author");
-  const pages = formData.get("pages");
-  const read = formData.get("read");
+  event.preventDefault()
 
-  library.addBook(title, author, Number(pages), Boolean(read));
+  const form = event.target
 
-  form.reset();
-  dialog.close();
-});
+  showErrors()
+  
+  if (!form.checkValidity()) {
+    return
+  }
+
+  const formData = new FormData(form)
+  const title = formData.get("title")
+  const author = formData.get("author")
+  const pages = formData.get("pages")
+  const read = formData.get("read")
+
+  library.addBook(title, author, Number(pages), Boolean(read))
+
+  form.reset()
+  dialog.close()
+})
+
+function showErrors() {
+  const title = document.querySelector("#title")
+  const author = document.querySelector("#author")
+  const pages = document.querySelector("#pages")
+  const titleError = title.nextElementSibling
+  const authorError = author.nextElementSibling
+  const pagesError = pages.nextElementSibling
+
+  if (!title.validity.valid) {
+    if (title.validity.valueMissing) {
+      titleError.textContent = "Title is required"
+    } else {
+      titleError.textContent = pages.validationMessage
+    }
+    titleError.className = "error active"
+  } else {
+    titleError.textContent = ""
+    titleError.className = "error"
+  }
+
+  if (!author.validity.valid) {
+    authorError.className = "error active"
+    if (author.validity.valueMissing) {
+      authorError.textContent = "Author is required"
+    } else {
+      authorError.textContent = pages.validationMessage
+    }
+  } else {
+    authorError.textContent = ""
+    authorError.className = "error"
+  }
+
+  if (!pages.validity.valid) {
+    pagesError.className = "error active"
+    if (pages.validity.valueMissing) {
+      pagesError.textContent = "Nb. of pages is required"
+    } else {
+      pagesError.textContent = pages.validationMessage
+    }
+  } else {
+    pagesError.textContent = ""
+    pagesError.className = "error"
+  }
+}
