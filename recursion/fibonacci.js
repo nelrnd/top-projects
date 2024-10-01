@@ -6,4 +6,14 @@ function fibs(nb) {
   return sequence
 }
 
-console.log(fibs(8))
+console.log(fibs(20))
+
+function fibsRec(nb, arr = [0, 1]) {
+  if (arr.length === nb) {
+    return arr
+  }
+  arr.push(arr.at(-1) + arr.at(-2))
+  return fibsRec(nb, arr)
+}
+
+console.log(fibsRec(20))
