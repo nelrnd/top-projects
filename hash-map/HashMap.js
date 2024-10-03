@@ -1,7 +1,7 @@
 class HashMap {
-  constructor(capacity = 16) {
+  constructor(capacity = 16, loadFactor = 0.75) {
     this.capacity = capacity
-    this.loadFactor = 0.75
+    this.loadFactor = loadFactor
     this.buckets = new Array(this.capacity)
   }
 
@@ -17,8 +17,11 @@ class HashMap {
 
   set(key, value) {
     if (this.has(key)) {
-      const entry = this.get(key)
-      entry[1] = value
+      for (const entry of this.buckets[this.hash(key)]) {
+        if (entry[0] === key) {
+          entry[1] = value
+        }
+      }
     } else {
       if (!this.buckets[this.hash(key)]) {
         this.buckets[this.hash(key)] = []
@@ -27,7 +30,7 @@ class HashMap {
     }
 
     if (this.length > this.capacity * this.loadFactor) {
-      this.expand()
+      this.grow()
     }
   }
 
