@@ -19,6 +19,7 @@ class Graph {
       [-1, 2],
       [-2, -1],
     ]
+    this.populateMoves()
   }
 
   createBoard() {
@@ -61,6 +62,32 @@ class Graph {
     }
     return this.board[x][y]
   }
+
+  knightMoves(start, finish) {
+    const [finishX, finishY] = finish
+
+    const queue = [[start]]
+    let shortestPath
+
+    while (queue.length) {
+      const first = queue.shift()
+      const [currentX, currentY] = first.at(-1)
+      if (currentX === finishX && currentY === finishY) {
+        shortestPath = first
+        break
+      }
+      const square = this.findSquare(currentX, currentY)
+      queue.push(...square.moves.map((move) => [...first, move]))
+    }
+
+    console.log(
+      `You made it in ${shortestPath.length} ${shortestPath.length === 1 ? "move" : "moves"}! Here's your path:`
+    )
+    for (const step of shortestPath) {
+      console.log(step)
+    }
+  }
 }
 
 const myGraph = new Graph()
+console.log(myGraph.knightMoves([0, 0], [7, 7]))
