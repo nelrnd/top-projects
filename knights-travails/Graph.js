@@ -1,10 +1,4 @@
-class Square {
-  constructor(x, y) {
-    this.x = x
-    this.y = y
-    this.moves = []
-  }
-}
+const Square = require("./Square")
 
 class Graph {
   constructor(size = 10) {
@@ -81,7 +75,7 @@ class Graph {
     }
 
     console.log(
-      `You made it in ${shortestPath.length} ${shortestPath.length === 1 ? "move" : "moves"}! Here's your path:`
+      `You made it in ${shortestPath.length - 1} ${shortestPath.length - 1 === 1 ? "move" : "moves"}! Here's your path:`
     )
     for (const step of shortestPath) {
       console.log(step)
@@ -89,5 +83,4 @@ class Graph {
   }
 }
 
-const myGraph = new Graph()
-console.log(myGraph.knightMoves([0, 0], [7, 7]))
+module.exports = Graph
