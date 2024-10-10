@@ -1,4 +1,4 @@
-const Ship = require("./Ship")
+const Ship = require("../classes/Ship")
 
 it("can be sunked if hit enough times", () => {
   const ship = new Ship(3)

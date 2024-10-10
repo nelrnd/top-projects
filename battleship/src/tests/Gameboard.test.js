@@ -1,5 +1,5 @@
-const Gameboard = require("./Gameboard")
-const Ship = require("./Ship")
+const Gameboard = require("../classes/Gameboard")
+const Ship = require("../classes/Ship")
 
 it("cannot receive attack at same coordinates twice", () => {
   const gameboard = new Gameboard()
