@@ -1,7 +1,12 @@
-const Game = require("./classes/Game")
-const { Player, Computer } = require("./classes/Player")
 require("./style.css")
 
-const player1 = new Player()
-const player2 = new Computer()
-const game = new Game([player1, player2])
+const Gameboard = require("./classes/Gameboard")
+const Controller = require("./classes/Controller")
+
+const controller = new Controller()
+
+const gameboard = new Gameboard()
+gameboard.populateRandomly()
+
+const board = controller.createBoard(gameboard)
+document.body.appendChild(board)

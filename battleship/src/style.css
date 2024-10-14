@@ -10,37 +10,40 @@
 
 body {
   height: 100%;
-}
-
-#content {
-  height: 100%;
-}
-
-.board-row {
-  height: 100%;
-  display: flex;
-  gap: 4rem;
-  align-items: center;
-  justify-content: center;
+  padding: 2rem;
 }
 
 .board {
-  display: grid;
+  outline: solid 2px black;
+  background-color: rgba(0, 0, 0, 0.1);
   width: 500px;
-  outline: solid 2px gray;
+  height: 500px;
+  position: relative;
 }
 
-.square {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.board > div {
+  display: grid;
+  position: absolute;
+  inset: 0;
 }
 
-.mark {
-  width: 40%;
-  height: 40%;
-  border-radius: 1000px;
-  background-color: gray;
+.board button {
+  border-radius: 0;
+  border: solid 1px black;
+  background-color: transparent;
+}
+
+.board button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.ships {
+  pointer-events: none;
+}
+
+.ship {
+  z-index: -1;
+  background-color: blue;
+  outline: solid 2px black;
+  border: solid 2px black;
 }
