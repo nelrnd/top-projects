@@ -108,3 +108,9 @@ it("reports whether all ships are sunk", () => {
   gameboard.receiveAttack(9, 9)
   expect(gameboard.allShipsAreSunk).toBe(true)
 })
+
+it("can populate board with randomly placed ships", () => {
+  const gameboard = new Gameboard()
+  gameboard.populateRandomly()
+  expect(gameboard.placedShips.length).toBe(5)
+})

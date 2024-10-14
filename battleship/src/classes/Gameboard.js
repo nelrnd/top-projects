@@ -89,6 +89,30 @@ class Gameboard {
       (attack) => attack[0] === x && attack[1] === y
     )
   }
+
+  populateRandomly(blueprint = defaultShipsBlueprint) {
+    const ships = blueprint.map((length) => new Ship(length))
+    ships.forEach((ship) => {
+      while (!this.placedShips.find((placedShip) => placedShip.ship === ship)) {
+        try {
+          const orientation = Math.random() < 0.5 ? "horizontal" : "vertical"
+          const x = Math.floor(
+            Math.random() *
+              (orientation === "horizontal"
+                ? this.size - ship.length
+                : this.size)
+          )
+          const y = Math.floor(
+            Math.random() *
+              (orientation === "vertical" ? this.size - ship.length : this.size)
+          )
+          this.placeShip(ship, [x, y], orientation)
+        } catch (err) {
+          // do nothing, try again
+        }
+      }
+    })
+  }
 }
 
 module.exports = Gameboard
