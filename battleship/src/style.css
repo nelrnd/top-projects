@@ -1,3 +1,46 @@
-h1 {
-  color: blue;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+#content {
+  height: 100%;
+}
+
+.board-row {
+  height: 100%;
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.board {
+  display: grid;
+  width: 500px;
+  outline: solid 2px gray;
+}
+
+.square {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mark {
+  width: 40%;
+  height: 40%;
+  border-radius: 1000px;
+  background-color: gray;
 }
