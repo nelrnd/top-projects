@@ -1,12 +1,15 @@
 require("./style.css")
-
-const Gameboard = require("./classes/Gameboard")
+const { Player, Computer } = require("./classes/Player")
 const Controller = require("./classes/Controller")
 
-const controller = new Controller()
+const content = document.getElementById("content")
 
-const gameboard = new Gameboard()
-gameboard.populateRandomly()
+const player1 = new Player()
+const player2 = new Computer()
 
-const board = controller.createBoard(gameboard)
-document.body.appendChild(board)
+const players = [player1, player2]
+players.forEach((player) => player.gameboard.populateRandomly())
+
+const controller = new Controller(content)
+
+controller.initiateGame(players)
