@@ -36,7 +36,7 @@ class Game {
         this.currentPlayer === this.players[0]
           ? "It's your turn"
           : "It's computer turn"
-      this.controller.updateStatusMessage(message)
+      this.controller.updateInfo(message)
     }
     if (this.currentPlayer.type === "computer") {
       this.disableBoard(this.currentPlayer)
@@ -50,13 +50,27 @@ class Game {
   }
 
   disableBoard(player) {
-    const squares = player.boardElem.querySelectorAll(".square")
+    const squares = player.gameboard.elem.querySelectorAll(".square")
     squares.forEach((square) => square.setAttribute("disabled", true))
   }
 
   enableBoard(player) {
-    const squares = player.boardElem.querySelectorAll(".square")
+    const squares = player.gameboard.elem.querySelectorAll(".square")
     squares.forEach((square) => square.removeAttribute("disabled"))
+  }
+
+  play(coordinates) {
+    try {
+      this.otherPlayer.gameboard.receiveAttack(...coordinates)
+      if (this.otherPlayer.gameboard.allShipsAreSunk) {
+        this.players.forEach((player) => this.disableBoard(player))
+        this.controller.updateInfo("Game is over.")
+      } else {
+        this.switchTurn()
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 

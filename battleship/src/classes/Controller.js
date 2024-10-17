@@ -4,31 +4,20 @@ class Controller {
   constructor(content, game) {
     this.game = game
     this.content = content
-    this.statusMessage = null
-  }
-
-  handleClick(gameboard, coordinates) {
-    try {
-      gameboard.receiveAttack(...coordinates)
-    } catch {
-      /* do nothing */
-    }
+    this.info = null
   }
 
   createBoard(gameboard, isMe, name) {
     const board = document.createElement("div")
     const squares = document.createElement("div")
     const ships = document.createElement("div")
-
     board.className = "board"
     squares.className = "squares"
     ships.className = "ships"
-
     squares.style.gridTemplateColumns = `repeat(${gameboard.size}, 1fr)`
     squares.style.gridTemplateRows = `repeat(${gameboard.size}, 1fr)`
     ships.style.gridTemplateColumns = `repeat(${gameboard.size}, 1fr)`
     ships.style.gridTemplateRows = `repeat(${gameboard.size}, 1fr)`
-
     // create squares
     for (let i = 0; i < gameboard.size * gameboard.size; i++) {
       let square = document.createElement(isMe ? "div" : "button")
@@ -39,7 +28,6 @@ class Controller {
       }
       squares.appendChild(square)
     }
-
     // create ships
     if (isMe) {
       for (const placedShip of gameboard.placedShips) {
@@ -47,20 +35,16 @@ class Controller {
         ships.appendChild(ship)
       }
     }
-
     board.appendChild(squares)
     board.appendChild(ships)
-
     // create heading
     if (name) {
       const boardHeading = document.createElement("h2")
       boardHeading.textContent = name
       board.appendChild(boardHeading)
     }
-
     board.addEventListener("attack", (event) => this.handleAttack(event))
     board.addEventListener("sunk", (event) => this.handleSunk(event))
-
     return board
   }
 
@@ -79,42 +63,36 @@ class Controller {
     return ship
   }
 
-  renderBoards(players) {
-    const boardRow = document.querySelector(".board-row")
-    boardRow.innerHTML = null
-
-    const boards = players.map((player) => this.createBoard())
+  createInfo() {
+    const info = document.createElement("header")
+    info.setAttribute("id", "info")
+    this.info = info
+    return info
   }
 
-  createStatusMessage(message) {
-    const statusMessage = document.createElement("header")
-    statusMessage.setAttribute("id", "message")
-    if (message) {
-      statusMessage.textContent = message
-    }
-    this.statusMessage = statusMessage
-    return statusMessage
-  }
-
-  updateStatusMessage(message) {
-    this.statusMessage.textContent = message
+  updateInfo(message) {
+    this.info.textContent = message
   }
 
   initiateGame(players) {
-    const statusMessage = this.createStatusMessage()
-    const boardElem1 = this.createBoard(players[0].gameboard, true, "You")
-    const boardElem2 = this.createBoard(players[1].gameboard, false, "Computer")
-    players[0].gameboard.elem = boardElem1
-    players[1].gameboard.elem = boardElem2
+    const info = this.createInfo()
+    const board1 = this.createBoard(players[0].gameboard, true, "You")
+    const board2 = this.createBoard(players[1].gameboard, false, "Computer")
+    players[0].gameboard.elem = board1
+    players[1].gameboard.elem = board2
     const boardRow = document.createElement("div")
     const separatorElem = document.createElement("div")
     boardRow.className = "board-row"
     separatorElem.className = "separator"
-    boardRow.appendChild(boardElem1)
+    boardRow.appendChild(board1)
     boardRow.appendChild(separatorElem)
-    boardRow.appendChild(boardElem2)
-    this.content.appendChild(statusMessage)
+    boardRow.appendChild(board2)
+    this.content.appendChild(info)
     this.content.appendChild(boardRow)
+  }
+
+  handleClick(gameboard, coordinates) {
+    this.game.play(coordinates)
   }
 
   handleAttack(event) {
@@ -127,7 +105,6 @@ class Controller {
   }
 
   handleSunk(event) {
-    console.log(this)
     const { gameboard, placedShip } = event.detail
     const ships = gameboard.elem.querySelector(".ships")
     const ship = this.createShip(placedShip)
