@@ -82,6 +82,24 @@ class Gameboard {
       placedShip.ship.hit()
     }
     this.receivedAttacks.push([x, y])
+
+    if (this.elem) {
+      const event = new CustomEvent("attack", {
+        detail: {
+          gameboard: this,
+          coordinates: [x, y],
+          isHit: !!placedShip,
+        },
+      })
+      this.elem.dispatchEvent(event)
+
+      if (placedShip && placedShip.ship.isSunk) {
+        const event = new CustomEvent("sunk", {
+          detail: { gameboard: this, placedShip },
+        })
+        this.elem.dispatchEvent(event)
+      }
+    }
   }
 
   findAttack(x, y) {
@@ -112,6 +130,14 @@ class Gameboard {
         }
       }
     })
+  }
+
+  static getSquareIndex(coordinates, size) {
+    return coordinates[0] + coordinates[1] * size
+  }
+
+  static getSquareCoordinates(index, size) {
+    return [index % size, Math.trunc(index / size)]
   }
 }
 

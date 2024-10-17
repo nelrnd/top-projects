@@ -1,15 +1,21 @@
 require("./style.css")
-const { Player, Computer } = require("./classes/Player")
+const Game = require("./classes/Game")
 const Controller = require("./classes/Controller")
 
-const content = document.getElementById("content")
+const controller = new Controller(document.getElementById("content"))
+const game = new Game(controller)
+controller.game = game
 
-const player1 = new Player()
-const player2 = new Computer()
+game.start()
 
-const players = [player1, player2]
-players.forEach((player) => player.gameboard.populateRandomly())
+document.addEventListener("hit", (event) => {
+  const square = event.square
 
-const controller = new Controller(content)
+  function addMark(square) {
+    const mark = document.createElement("div")
+    mark.className = "mark"
+    square.appendChild(mark)
+  }
 
-controller.initiateGame(players)
+  addMark(square)
+})

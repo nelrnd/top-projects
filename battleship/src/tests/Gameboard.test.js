@@ -114,3 +114,11 @@ it("can populate board with randomly placed ships", () => {
   gameboard.populateRandomly()
   expect(gameboard.placedShips.length).toBe(5)
 })
+
+it("gets index from coordinates", () => {
+  expect(Gameboard.getSquareIndex([3, 0], 10)).toBe(3)
+})
+
+it("get coordinates from index", () => {
+  expect(Gameboard.getSquareCoordinates(3, 10)).toEqual([3, 0])
+})
