@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  line-height: 1.5;
+}
+
+h2 {
+  font-size: 3rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+.project {
+  max-width: 400px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.project_img-wrapper {
+  background-color: gray;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+}
+
+.project_content {
+  padding: 1rem;
+}
+
+.project_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.project_menu {
+  display: flex;
+  gap: 0.75rem;
+}
+
+a {
+  text-decoration: none;
+}
