@@ -10,14 +10,26 @@ body {
 
 h2 {
   font-size: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 h3 {
   font-size: 1.75rem;
 }
 
+.section-content {
+  max-width: 75rem;
+  padding: 2rem;
+  margin: auto;
+}
+
+.projects_wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
 .project {
-  max-width: 400px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
