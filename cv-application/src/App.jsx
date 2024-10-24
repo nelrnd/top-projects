@@ -3,6 +3,7 @@ import Input from "./components/Input"
 import TextArea from "./components/TextArea"
 import Checkbox from "./components/Checkbox"
 import "./styles/app.css"
+import { createPortal } from "react-dom"
 
 const generalTemplate = {
   fullName: "",
@@ -57,7 +58,12 @@ export default function App() {
           setExperienceList={setExperienceList}
         />
       ) : (
-        <Preview />
+        <Preview
+          handleEdit={() => setEditMode(true)}
+          general={general}
+          educationList={educationList}
+          experienceList={experienceList}
+        />
       )}
     </div>
   )
@@ -243,7 +249,8 @@ function ExperienceItem({ experience, onChange }) {
       />
       <Input
         label="Position title"
-        value={(e) => handleChange(e, "positionTitle")}
+        value={experience.positionTitle}
+        onChange={(e) => handleChange(e, "positionTitle")}
       />
       <TextArea
         label="Main responsabilities (comma separated)"
@@ -270,5 +277,68 @@ function ExperienceItem({ experience, onChange }) {
         onChange={(e) => handleCheck(e, "current")}
       />
     </section>
+  )
+}
+
+function Preview({ handleEdit, general, educationList, experienceList }) {
+  const contactInfos = [general.address, general.email, general.phone]
+
+  return (
+    <>
+      <header>
+        <h2>Preview CV</h2>
+        <button onClick={handleEdit}>Back to edit</button>
+      </header>
+      <main>
+        <div>{general.fullName}</div>
+        <div>{general.role}</div>
+        <div>{general.about}</div>
+
+        {contactInfos.length > 0 && (
+          <ul>
+            {contactInfos.map((info, id) => (
+              <li key={id}>{info}</li>
+            ))}
+          </ul>
+        )}
+
+        <section>
+          <h3>Education</h3>
+          {educationList.map((education) => (
+            <article key={education.id}>
+              <div>
+                {education.startYear} -{" "}
+                {education.current ? "CURRENT" : education.endYear}
+              </div>
+              <h4>
+                {education.titleOfStudy} at {education.schoolName}
+              </h4>
+            </article>
+          ))}
+        </section>
+        <section>
+          <h3>Work experience</h3>
+          {experienceList.map((experience) => (
+            <article key={experience.id}>
+              <div>
+                {experience.startYear} -{" "}
+                {experience.current ? "CURRENT" : experience.endYear}
+              </div>
+              <h4>
+                {experience.positionTitle} at {experience.companyName}
+              </h4>
+              <ul>
+                {experience.responsabilities
+                  .split(",")
+                  .filter((responsability) => responsability)
+                  .map((responsability, id) => (
+                    <li key={id}>{responsability}</li>
+                  ))}
+              </ul>
+            </article>
+          ))}
+        </section>
+      </main>
+    </>
   )
 }
