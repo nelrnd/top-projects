@@ -1,48 +1,61 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
+import useCharacters from "./useCharacters.jsx"
+import "./App.css"
 
 function App() {
-  const [characters, setCharacters] = useState([])
+  const [characters, shuffle] = useCharacters()
+  const [clickedIds, setClickedIds] = useState(new Set())
+  const [score, setScore] = useState(0)
+  const [bestScore, setBestScore] = useState(0)
 
-  useEffect(() => {
-    getCharacters()
-      .then((characters) => setCharacters(characters))
-      .catch((err) => console.log(err))
-  }, [])
+  function handleClick(character) {
+    if (clickedIds.has(character.id)) {
+      setScore(0)
+      if (score > bestScore) {
+        setBestScore(score)
+      }
+      setClickedIds(new Set())
+    } else {
+      const newClickedIds = new Set([...clickedIds])
+      newClickedIds.add(character.id)
+      setClickedIds(newClickedIds)
+      setScore(score + 1)
+    }
+    shuffle()
+  }
 
   return (
     <>
       <h1>Memory Card</h1>
-      {characters.map((character) => (
-        <>
-          <img key={character.id} src={character.image} alt={character.name} />
-          <p>{character.id}</p>
-        </>
-      ))}
+      <p>Win the game by clicking every card exactly once.</p>
+      <Grid>
+        {characters.map((character) => (
+          <Card
+            key={character.id}
+            character={character}
+            onClick={() => handleClick(character)}
+          />
+        ))}
+      </Grid>
+      <div className="score">
+        <strong>Score:</strong> {score} | <strong>Best score:</strong>{" "}
+        {bestScore}
+      </div>
     </>
   )
 }
 
-async function getCharacters() {
-  function filterCharacters(character) {
-    return !excludeList.includes(character.id)
-  }
+function Card({ character, onClick }) {
+  return (
+    <button className="card" onClick={onClick}>
+      <img src={character.image} alt="" />
+      <h2>{character.name}</h2>
+    </button>
+  )
+}
 
-  function mapCharacters(character) {
-    return {
-      id: character.id,
-      name: character.name,
-      image: character.images[0],
-    }
-  }
-
-  const excludeList = [
-    141, 166, 195, 325, 396, 400, 1359, 559, 593, 627, 735, 736,
-  ]
-  const res = await fetch("https://narutodb.xyz/api/akatsuki")
-  const data = await res.json()
-  const characters = data.akatsuki
-  const result = characters.filter(filterCharacters).map(mapCharacters)
-  return result
+function Grid({ children }) {
+  return <div className="grid">{children}</div>
 }
 
 export default App

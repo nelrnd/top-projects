@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react"
+
 export default function useCharacters() {
   const [characters, setCharacters] = useState([])
 
@@ -18,17 +20,17 @@ export default function useCharacters() {
   }
 
   function shuffle() {
-    const charactersCopy = [...characters]
+    const newCharacters = [...characters]
     let currentIndex = characters.length
     while (currentIndex != 0) {
       let randomIndex = Math.floor(Math.random() * currentIndex)
       currentIndex--
-      ;[charactersCopy[currentIndex], charactersCopy[randomIndex]] = [
-        charactersCopy[randomIndex],
-        charactersCopy[currentIndex],
+      ;[newCharacters[currentIndex], newCharacters[randomIndex]] = [
+        newCharacters[randomIndex],
+        newCharacters[currentIndex],
       ]
     }
-    setCharacters(charactersCopy)
+    setCharacters(newCharacters)
   }
 
   useEffect(() => {

@@ -1,0 +1,52 @@
+:root {
+  --text-color: #ffffff;
+  --edge-color: #3b3b3b;
+  --background-color: #191919;
+  --foreground-color: #252525;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--text-color);
+  background-color: var(--background-color);
+  text-align: center;
+}
+
+h1 {
+  margin: 2rem 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 80%;
+  margin: auto;
+}
+
+.card {
+  padding: 1rem;
+  background-color: var(--foreground-color);
+  border-radius: 0.5rem;
+  outline: solid 1px var(--edge-color);
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.card h2 {
+  margin-top: 1rem;
+}
+
+.score {
+  margin-top: 2rem;
+}
+
+p {
+  margin-bottom: 2rem;
+}
