@@ -8,6 +8,8 @@ function App() {
   const [score, setScore] = useState(0)
   const [bestScore, setBestScore] = useState(0)
 
+  const over = score === characters.length
+
   function handleClick(character) {
     if (clickedIds.has(character.id)) {
       setScore(0)
@@ -22,6 +24,10 @@ function App() {
       setScore(score + 1)
     }
     shuffle()
+  }
+
+  function handleReset() {
+    setScore(0)
   }
 
   return (
@@ -41,6 +47,8 @@ function App() {
         <strong>Score:</strong> {score} | <strong>Best score:</strong>{" "}
         {bestScore}
       </div>
+
+      {over && <Over onClick={handleReset} />}
     </>
   )
 }
@@ -56,6 +64,18 @@ function Card({ character, onClick }) {
 
 function Grid({ children }) {
   return <div className="grid">{children}</div>
+}
+
+function Over({ onClick }) {
+  return (
+    <>
+      <div className="modal">
+        <h2>Congrats, you won!</h2>
+        <button onClick={onClick}>Play again</button>
+      </div>
+      <div className="backdrop"></div>
+    </>
+  )
 }
 
 export default App

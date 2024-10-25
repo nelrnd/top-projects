@@ -50,3 +50,32 @@ h1 {
 p {
   margin-bottom: 2rem;
 }
+
+.modal {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 300px;
+  padding: 1rem;
+  background-color: var(--foreground-color);
+  border-radius: 0.5rem;
+  outline: solid 1px var(--edge-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.backdrop {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal h2 {
+  margin-bottom: 1rem;
+}
