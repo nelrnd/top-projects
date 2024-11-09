@@ -6,6 +6,7 @@
 
 :root {
   --primary-color: #4027e7;
+  --ghost-color: #f4f4f4;
   --text-color: #777;
 }
 
@@ -34,6 +35,26 @@ img {
   max-width: 100%;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input,
+button {
+  font-size: 100%;
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
 .hero-heading {
   font-size: 6rem;
   text-align: center;
@@ -41,8 +62,6 @@ img {
 }
 
 .btn {
-  font-size: 100%;
-  font-family: inherit;
   font-weight: 500;
   width: fit-content;
   display: flex;
@@ -52,7 +71,6 @@ img {
   border: none;
   border-radius: 0.25rem;
   padding: 0.75rem 1.5rem;
-  cursor: pointer;
 }
 
 .link-btn {

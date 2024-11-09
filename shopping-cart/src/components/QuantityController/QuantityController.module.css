@@ -1,0 +1,16 @@
+.QuantityController {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(3, 3rem);
+  height: 2rem;
+  border-radius: 100rem;
+  overflow: hidden;
+  background-color: var(--ghost-color);
+
+  input,
+  button {
+    border: none;
+    text-align: center;
+    background-color: transparent;
+  }
+}
