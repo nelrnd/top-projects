@@ -1,0 +1,26 @@
+.CartCheckout {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: solid 1px var(--ghost-color);
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+    color: var(--text-color);
+  }
+
+  div:last-of-type {
+    border-top: solid 1px var(--ghost-color);
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+    color: black;
+    font-weight: 700;
+  }
+
+  a {
+    margin-top: 1rem;
+    width: 100%;
+  }
+}

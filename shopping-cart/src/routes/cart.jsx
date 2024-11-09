@@ -1,6 +1,7 @@
 import { useLoaderData, useOutletContext } from "react-router-dom"
 import PageHeader from "../components/PageHeader/PageHeader"
 import CartList from "../components/CartList/CartList"
+import CartCheckout from "../components/CartCheckout/CartCheckout"
 
 export default function Cart() {
   const { cart, cartCount } = useOutletContext()
@@ -22,6 +23,7 @@ export default function Cart() {
         </h1>
       </PageHeader>
       <CartList items={items} />
+      {items.length > 0 && <CartCheckout items={items} />}
     </div>
   )
 }
