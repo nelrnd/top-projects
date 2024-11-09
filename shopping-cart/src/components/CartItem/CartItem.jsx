@@ -1,9 +1,14 @@
 import QuantityController from "../QuantityController/QuantityController"
 import trash from "../../assets/trash.svg"
 import styles from "./CartItem.module.css"
+import { useOutletContext } from "react-router-dom"
 
 export default function CartItem({ item }) {
+  const { removeFromCart, updateQuantity } = useOutletContext()
+
   const totalPrice = item.product.price * item.quantity
+
+  const quantity = item.quantity
 
   return (
     <div className={styles.CartItem}>
@@ -17,8 +22,16 @@ export default function CartItem({ item }) {
         <div className={styles.price}>${item.product.price}</div>
 
         <div className={styles.menu}>
-          <QuantityController quantity={item.quantity} />
-          <button className={styles.btn + " btn"}>
+          <QuantityController
+            quantity={item.quantity}
+            onIncr={() => updateQuantity(item.id, Number(quantity) + 1)}
+            onDecr={() => updateQuantity(item.id, Number(quantity) - 1)}
+            onChange={(event) => updateQuantity(item.id, event.target.value)}
+          />
+          <button
+            onClick={() => removeFromCart(item.product.id)}
+            className={styles.btn + " btn"}
+          >
             <img src={trash} alt="" />
             Delete
           </button>
