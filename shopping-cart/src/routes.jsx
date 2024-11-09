@@ -1,16 +1,16 @@
-import { createBrowserRouter } from "react-router-dom"
-import Root from "./routes/root"
-import ErrorPage from "./routes/error-page"
-import Home from "./routes/home"
-import Products, { loader as productsLoader } from "./routes/products"
-import Product, { loader as productLoader } from "./routes/product"
 import Cart from "./routes/cart"
+import Checkout from "./routes/checkout"
+import Error from "./routes/error"
+import Home from "./routes/home"
+import Product from "./routes/product"
+import Products from "./routes/products"
+import Root from "./routes/root"
 
-const router = createBrowserRouter([
+const routes = [
   {
     path: "/",
+    errorElement: <Error />,
     element: <Root />,
-    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -19,19 +19,21 @@ const router = createBrowserRouter([
       {
         path: "products",
         element: <Products />,
-        loader: productsLoader,
       },
       {
         path: "products/:productId",
         element: <Product />,
-        loader: productLoader,
       },
       {
         path: "cart",
         element: <Cart />,
       },
+      {
+        path: "checkout",
+        element: <Checkout />,
+      },
     ],
   },
-])
+]
 
-export default router
+export default routes
