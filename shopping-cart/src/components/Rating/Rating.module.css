@@ -1,0 +1,10 @@
+.Rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0;
+}
+
+.Rating_count {
+  color: var(--text-color);
+}

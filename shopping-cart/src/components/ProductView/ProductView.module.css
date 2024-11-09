@@ -1,0 +1,41 @@
+.ProductView {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 4rem;
+}
+
+.imgWrapper {
+  width: 100%;
+  height: auto;
+
+  img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+  }
+}
+
+.contentWrapper {
+  margin-top: 2rem;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.description {
+  color: var(--text-color);
+  line-height: 1.5;
+  width: 80%;
+  margin-bottom: 1.25rem;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+}

@@ -2,7 +2,7 @@ import Cart from "./routes/cart"
 import Checkout from "./routes/checkout"
 import Error from "./routes/error"
 import Home from "./routes/home"
-import Product from "./routes/product"
+import Product, { loader as productLoader } from "./routes/product"
 import Products, { loader as productsLoader } from "./routes/products"
 import Root from "./routes/root"
 
@@ -23,6 +23,7 @@ const routes = [
       },
       {
         path: "products/:productId",
+        loader: productLoader,
         element: <Product />,
       },
       {
