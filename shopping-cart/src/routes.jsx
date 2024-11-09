@@ -3,7 +3,7 @@ import Checkout from "./routes/checkout"
 import Error from "./routes/error"
 import Home from "./routes/home"
 import Product from "./routes/product"
-import Products from "./routes/products"
+import Products, { loader as productsLoader } from "./routes/products"
 import Root from "./routes/root"
 
 const routes = [
@@ -18,6 +18,7 @@ const routes = [
       },
       {
         path: "products",
+        loader: productsLoader,
         element: <Products />,
       },
       {
