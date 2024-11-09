@@ -30,6 +30,11 @@ a {
   font-weight: 500;
 }
 
+.detail {
+  color: var(--text-color);
+  font-weight: 400;
+}
+
 img {
   display: block;
   max-width: 100%;

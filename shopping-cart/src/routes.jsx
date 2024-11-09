@@ -28,6 +28,7 @@ const routes = [
       },
       {
         path: "cart",
+        loader: productsLoader,
         element: <Cart />,
       },
       {

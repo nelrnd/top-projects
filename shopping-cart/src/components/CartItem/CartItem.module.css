@@ -1,0 +1,53 @@
+.CartItem {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: solid 1px var(--ghost-color);
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+  }
+}
+
+.CartItem:first-of-type {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.content {
+  flex: 1;
+}
+
+.image {
+  width: 6rem;
+  height: 6rem;
+  object-fit: contain;
+}
+
+.title {
+  color: var(--text-color);
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.price {
+  margin-bottom: 0.5rem;
+}
+
+.totalPrice {
+  font-size: 1.25rem;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn {
+  height: 2rem;
+  border-radius: 100rem;
+}
