@@ -15,4 +15,22 @@
       font-weight: 700;
     }
   }
+
+  li:last-of-type a {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+}
+
+.CartBadge {
+  color: white;
+  background-color: var(--primary-color);
+  font-size: 0.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

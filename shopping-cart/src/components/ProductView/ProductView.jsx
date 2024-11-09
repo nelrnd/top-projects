@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Rating from "../Rating/Rating"
 import styles from "./ProductView.module.css"
+import { useOutletContext } from "react-router-dom"
 
 export default function ProductView({ product }) {
   return (
@@ -15,17 +16,20 @@ export default function ProductView({ product }) {
         <p className={styles.description}>{product.description}</p>
         <div className={styles.price}>${product.price}</div>
 
-        <ProductForm />
+        <ProductForm product={product} />
       </div>
     </div>
   )
 }
 
-function ProductForm() {
+function ProductForm({ product }) {
+  const { addToCart } = useOutletContext()
+
   const [quantity, setQuantity] = useState(1)
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    addToCart(product.id, quantity)
   }
 
   return (
