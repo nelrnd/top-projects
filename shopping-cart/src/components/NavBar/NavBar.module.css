@@ -1,0 +1,18 @@
+.NavBar {
+  padding: 1rem;
+
+  ul {
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  li:first-of-type {
+    margin-right: auto;
+
+    a {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+  }
+}

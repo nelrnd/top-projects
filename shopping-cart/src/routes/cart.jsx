@@ -1,7 +1,9 @@
+import PageHeader from "../components/PageHeader/PageHeader"
+
 export default function Cart() {
   return (
     <div>
-      <h1>Cart</h1>
+      <PageHeader title="Cart" />
     </div>
   )
 }

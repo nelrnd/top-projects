@@ -1,0 +1,8 @@
+.PageHeader {
+  padding: 1rem;
+  padding-top: 1.5rem;
+
+  h1 {
+    font-size: 1.5rem;
+  }
+}

@@ -1,7 +1,9 @@
+import PageHeader from "../components/PageHeader/PageHeader"
+
 export default function Products() {
   return (
     <div>
-      <h1>Products</h1>
+      <PageHeader title="Products" />
     </div>
   )
 }
