@@ -9,8 +9,6 @@ const router = createBrowserRouter(routes)
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <CartProvider>
-      <RouterProvider router={router} />
-    </CartProvider>
+    <RouterProvider router={router} />
   </StrictMode>
 )

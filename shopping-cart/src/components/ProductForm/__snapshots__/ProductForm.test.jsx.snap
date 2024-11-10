@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ProductForm component > renders ProductForm 1`] = `
+<div>
+  <form
+    class="_ProductForm_fb947a"
+  >
+    <div
+      class="_QuantityController_b7ada0"
+    >
+      <button
+        type="button"
+      >
+        -
+      </button>
+      <input
+        type="number"
+        value="1"
+      />
+      <button
+        type="button"
+      >
+        +
+      </button>
+    </div>
+    <button
+      class="btn primary-btn"
+    >
+      Add to cart
+    </button>
+  </form>
+</div>
+`;

@@ -1,4 +1,4 @@
-import { Link, useOutletContext } from "react-router-dom"
+import { Link } from "react-router-dom"
 import styles from "./CartCheckout.module.css"
 
 export default function CartCheckout({ items }) {
@@ -15,7 +15,7 @@ export default function CartCheckout({ items }) {
     <div className={styles.CartCheckout}>
       <div>
         <span>Subtotal</span>
-        <span>${subtotal}</span>
+        <span data-testid="subtotal">${subtotal}</span>
       </div>
       <div>
         <span>Shipping</span>
@@ -23,7 +23,7 @@ export default function CartCheckout({ items }) {
       </div>
       <div>
         <span>Total</span>
-        <span>${total}</span>
+        <span data-testid="total">${total}</span>
       </div>
       <Link to="/checkout" className="btn primary-btn">
         Checkout
