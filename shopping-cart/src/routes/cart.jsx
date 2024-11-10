@@ -1,10 +1,11 @@
-import { useLoaderData, useOutletContext } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 import PageHeader from "../components/PageHeader/PageHeader"
 import CartList from "../components/CartList/CartList"
 import CartCheckout from "../components/CartCheckout/CartCheckout"
+import { useCart } from "../CartProvider"
 
 export default function Cart() {
-  const { cart, cartCount } = useOutletContext()
+  const { cart, cartCount } = useCart()
   const { products } = useLoaderData()
 
   const countText =

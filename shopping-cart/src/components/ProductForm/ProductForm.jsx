@@ -1,10 +1,10 @@
 import { useState } from "react"
 import styles from "./ProductForm.module.css"
-import { useOutletContext } from "react-router-dom"
 import QuantityController from "../QuantityController/QuantityController"
+import { useCart } from "../../CartProvider"
 
 export default function ProductForm({ product }) {
-  const { addToCart } = useOutletContext()
+  const { addToCart } = useCart()
 
   const [quantity, setQuantity] = useState(1)
 

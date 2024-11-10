@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom"
 import styles from "./NavBar.module.css"
+import { useCart } from "../../CartProvider"
 
-export default function NavBar({ cartCount }) {
+export default function NavBar() {
+  const { cartCount } = useCart()
+
   return (
     <nav className={styles.NavBar}>
       <ul>

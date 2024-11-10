@@ -1,10 +1,10 @@
 import QuantityController from "../QuantityController/QuantityController"
 import trash from "../../assets/trash.svg"
 import styles from "./CartItem.module.css"
-import { useOutletContext } from "react-router-dom"
+import { useCart } from "../../CartProvider"
 
 export default function CartItem({ item }) {
-  const { removeFromCart, updateQuantity } = useOutletContext()
+  const { removeFromCart, updateQuantity } = useCart()
 
   const totalPrice = item.product.price * item.quantity
 
