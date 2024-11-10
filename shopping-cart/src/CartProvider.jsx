@@ -14,16 +14,15 @@ export default function CartProvider({ children }) {
   const cartCount = cart.reduce((prev, curr) => prev + curr.quantity, 0)
 
   const addToCart = (id, quantity) => {
-    quantity = Number(quantity)
     setCart((prevCart) => {
-      const newCart = [...prevCart]
-      const item = newCart.find((item) => item.id === id)
-      if (item) {
-        item.quantity += quantity
-      } else {
-        newCart.push({ id, quantity })
+      if (prevCart.find((item) => item.id === id)) {
+        return prevCart.map((item) =>
+          item.id === id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        )
       }
-      return newCart
+      return [...prevCart, { id, quantity }]
     })
   }
 
