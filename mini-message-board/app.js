@@ -21,4 +21,6 @@ const messages = [
 
 app.get("/", (req, res) => res.render("index", { messages }))
 
+app.get("/new", (req, res) => res.render("form"))
+
 app.listen(2001)
