@@ -37,4 +37,12 @@ app.post("/new", (req, res) => {
   res.redirect("/")
 })
 
+app.get("/messages/:messageId", (req, res) => {
+  const { messageId } = req.params
+
+  const message = messages[messageId]
+
+  res.render("message", { message })
+})
+
 app.listen(2001)

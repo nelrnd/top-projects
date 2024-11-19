@@ -10,12 +10,13 @@
 
   <% if (messages && messages.length) { %>
     <ul>
-      <% messages.map((message) => { %>
+      <% messages.map((message, id) => { %>
         <li>
           <em>
             <%= `${message.user} on ${message.added.toLocaleString()}:` %>
           </em>
            <%= message.text %>
+           <a href="<%= `/messages/${id}` %>">Open</a>
         </li>
         <% }) %>
     </ul>
