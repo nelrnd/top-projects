@@ -1,5 +1,7 @@
 const express = require("express")
 const path = require("path")
+const asyncHandler = require("express-async-handler")
+const CustomNotFoundError = require("./errors/CustomNotFoundError")
 
 const app = express()
 
@@ -37,12 +39,24 @@ app.post("/new", (req, res) => {
   res.redirect("/")
 })
 
-app.get("/messages/:messageId", (req, res) => {
-  const { messageId } = req.params
+app.get(
+  "/messages/:messageId",
+  asyncHandler((req, res, next) => {
+    const { messageId } = req.params
 
-  const message = messages[messageId]
+    const message = messages[messageId]
 
-  res.render("message", { message })
+    if (!message) {
+      throw new CustomNotFoundError("Message not found")
+    }
+
+    res.render("message", { message })
+  })
+)
+
+app.use((err, req, res, next) => {
+  console.log(err.message)
+  res.render("error", { error: err })
 })
 
 app.listen(2001)
