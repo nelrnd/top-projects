@@ -10,7 +10,7 @@ app.get("/about", (req, res) => res.sendFile(getPage("about")))
 
 app.get("/contact-me", (req, res) => res.sendFile(getPage("contact-me")))
 
-app.use((req, res) => res.status(404).sendFile(getPage("404")))
+app.get("*", (req, res) => res.status(404).sendFile(getPage("404")))
 
 function getPage(name) {
   return path.join(__dirname, "pages", `${name}.html`)
