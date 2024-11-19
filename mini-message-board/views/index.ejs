@@ -13,7 +13,7 @@
       <% messages.map((message) => { %>
         <li>
           <em>
-            <%= `${message.user} at ${message.added}:` %>
+            <%= `${message.user} on ${message.added.toLocaleString()}:` %>
           </em>
            <%= message.text %>
         </li>
