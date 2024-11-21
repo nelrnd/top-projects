@@ -7,8 +7,8 @@
   </head>
   <body>
     <h1>Message detail</h1>
-    <div>Author: <%= message.user %></div>
-    <div>Date: <%= message.added.toLocaleString() %></div>
+    <div>Author: <%= message.username %></div>
+    <div>Date: <%= new Date(message.added).toLocaleString() %></div>
     <div>Text: <%= message.text %></div>
   </body>
 </html>
