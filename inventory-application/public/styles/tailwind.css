@@ -9,3 +9,15 @@
 .navlink {
   @apply font-semibold hover:underline;
 }
+
+.heading {
+  @apply text-4xl font-bold mb-4;
+}
+
+.btn {
+  @apply block px-4 py-2 border-none rounded-md bg-black text-white hover:opacity-90;
+}
+
+.link {
+  @apply text-blue-700 hover:underline;
+}
