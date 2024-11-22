@@ -35,12 +35,24 @@ exports.item_detail = asyncHandler(async (req, res) => {
 
 exports.item_update_get = asyncHandler(async (req, res) => {
   const { itemId } = req.params
-  console.log("item_update_get")
+  const [item, category_list, brand_list] = await Promise.all([
+    db.getItemById(itemId),
+    db.getAllCategories(),
+    db.getAllBrands(),
+  ])
+  res.render("item-form", {
+    title: "Update item",
+    item,
+    category_list,
+    brand_list,
+  })
 })
 
 exports.item_update_post = asyncHandler(async (req, res) => {
   const { itemId } = req.params
-  console.log("item_update_post")
+  const { name, desc, price, quantity, category, brand } = req.body
+  await db.updateItem(itemId, { name, desc, price, quantity, category, brand })
+  res.redirect(`/item/${itemId}`)
 })
 
 exports.item_delete_get = asyncHandler(async (req, res) => {

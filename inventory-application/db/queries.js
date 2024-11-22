@@ -21,6 +21,8 @@ async function getCategoryById(id) {
   return rows[0]
 }
 
+async function updateCategory(id, { name, desc }) {}
+
 async function deleteCategory(id) {
   await pool.query("DELETE FROM categories WHERE category_id = $1", [id])
 }
@@ -89,6 +91,16 @@ async function getItemById(id) {
   return rows[0]
 }
 
+async function updateItem(
+  id,
+  { name, desc, price, quantity, category, brand }
+) {
+  await pool.query(
+    "UPDATE items SET name = $1, description = $2, price_in_dollar = $3, stock_quantity = $4, category_id = $5, brand_id = $6 WHERE id = $7;",
+    [name, desc, price, quantity, category, brand, id]
+  )
+}
+
 async function deleteItem(id) {
   await pool.query("DELETE FROM items WHERE id = $1", [id])
 }
@@ -107,5 +119,6 @@ module.exports = {
   getItemsByCategoryId,
   getItemsByBrandId,
   getItemById,
+  updateItem,
   deleteItem,
 }
