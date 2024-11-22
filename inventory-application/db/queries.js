@@ -40,6 +40,13 @@ async function getBrandById(id) {
   return rows[0]
 }
 
+async function getAllItems() {
+  const { rows } = await pool.query(
+    "SELECT * FROM items LEFT JOIN categories ON items.category_id = categories.category_id LEFT JOIN brands ON items.brand_id = brands.brand_id"
+  )
+  return rows
+}
+
 async function getItemsByCategoryId(categoryId) {
   const { rows } = await pool.query(
     "SELECT * FROM items LEFT JOIN categories ON items.category_id = categories.category_id LEFT JOIN brands ON items.brand_id = brands.brand_id WHERE items.category_id = $1",
@@ -71,6 +78,7 @@ module.exports = {
   createBrand,
   getAllBrands,
   getBrandById,
+  getAllItems,
   getItemsByCategoryId,
   getItemsByBrandId,
   getItemById,
