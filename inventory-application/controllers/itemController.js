@@ -7,11 +7,24 @@ exports.item_list = asyncHandler(async (req, res) => {
 })
 
 exports.item_create_get = asyncHandler(async (req, res) => {
-  console.log("item_create_get")
+  const [category_list, brand_list] = await Promise.all([
+    db.getAllCategories(),
+    db.getAllBrands(),
+  ])
+  res.render("item-form", { title: "Create item", category_list, brand_list })
 })
 
 exports.item_create_post = asyncHandler(async (req, res) => {
-  console.log("item_create_post")
+  const { name, desc, price, quantity, category, brand } = req.body
+  const item = await db.createItem({
+    name,
+    desc,
+    price,
+    quantity,
+    category,
+    brand,
+  })
+  res.redirect(`/item/${item.id}`)
 })
 
 exports.item_detail = asyncHandler(async (req, res) => {
