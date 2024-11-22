@@ -2,7 +2,8 @@ const asyncHandler = require("express-async-handler")
 const db = require("../db/queries")
 
 exports.brand_list = asyncHandler(async (req, res) => {
-  res.render("brand-list", { title: "Brands", brand_list: [] })
+  const brand_list = await db.getAllBrands()
+  res.render("brand-list", { title: "Brands", brand_list })
 })
 
 exports.brand_create_get = asyncHandler(async (req, res) => {
@@ -10,7 +11,9 @@ exports.brand_create_get = asyncHandler(async (req, res) => {
 })
 
 exports.brand_create_post = asyncHandler(async (req, res) => {
-  console.log("brand_create_post")
+  const { name, desc } = req.body
+  const brand = await db.createBrand({ name, desc })
+  res.redirect(`/brand/${brand.id}`)
 })
 
 exports.brand_detail = asyncHandler(async (req, res) => {
