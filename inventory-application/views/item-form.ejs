@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> | MUSIC STORE></title>
+  </head>
+  <body>
+    <%- include("navbar") %>
+    <h1><%= title %></h1>
+
+    <form action="/item/new" method="POST">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+
+      <div>
+        <label for="desc">Description:</label>
+        <textarea id="desc" name="desc"></textarea>
+      </div>
+
+      <div>
+        <label for="price">Price (in $):</label>
+        <input type="number" id="price" name="price" />
+      </div>
+
+      <div>
+        <label for="quantity">Quantity in stock:</label>
+        <input type="number" id="quantity" name="quantity" />
+      </div>
+
+      <div>
+        <label for="category">Category:</label>
+        <select id="category" name="category">
+          <% category_list.map((category) => { %>
+            <option value="<%= category.category_id %>"><%= category.category_name %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div>
+        <label for="brand">Brand:</label>
+        <select id="brand" name="brand">
+          <% brand_list.map((brand) => { %>
+            <option value="<%= brand.brand_id %>"><%= brand.brand_name %></option>
+          <% }) %>
+        </select> 
+      </div>
+
+      <button type="submit">Create</button>
+    </form>
+  </body>
+</html>
