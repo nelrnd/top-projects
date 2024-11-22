@@ -50,5 +50,11 @@ exports.category_delete_get = asyncHandler(async (req, res) => {
 
 exports.category_delete_post = asyncHandler(async (req, res) => {
   const { categoryId } = req.params
-  console.log("category_delete_post")
+  const item_list = await db.getItemsByCategoryId(categoryId)
+  if (item_list.length > 0) {
+    res.redirect(`/category/${categoryId}/delete`)
+    return
+  }
+  await db.deleteCategory(categoryId)
+  res.redirect("/")
 })

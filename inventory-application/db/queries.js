@@ -21,6 +21,10 @@ async function getCategoryById(id) {
   return rows[0]
 }
 
+async function deleteCategory(id) {
+  await pool.query("DELETE FROM categories WHERE category_id = $1", [id])
+}
+
 async function createBrand({ name, desc }) {
   const { rows } = await pool.query(
     "INSERT INTO brands (brand_name, brand_description) VALUES ($1, $2) RETURNING *;",
@@ -89,6 +93,7 @@ module.exports = {
   createCategory,
   getAllCategories,
   getCategoryById,
+  deleteCategory,
   createBrand,
   getAllBrands,
   getBrandById,
