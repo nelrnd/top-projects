@@ -7,23 +7,25 @@
     <link rel="stylesheet" href="/styles/style.css" />
   </head>
   <body>
-    <%- include("navbar") %>
-    <h1><%= title %></h1>
-    <% if (item_list && item_list.length > 0) { %>
-      <p>You need to delete the following items or change those item category before deleting this category:</p>
-      <ul>
-        <% item_list.map((item) => { %>
-          <li>
-            <a href="/item/<%= item.id %>"><%= `${item.name} by ${item.brand_name}` %></a>
-          </li>
-        <% }) %>
-      </ul>
-    <% } else { %>
-      <p>Do you really want to delete this category?</p>
-      <p><%= category.category_name %></p>
-      <form action="/category/<%= category.category_id %>/delete" method="POST">
-        <button type="submit">Confirm</button>
-      </form>
-    <% } %>
+    <div class="container">
+      <%- include("navbar") %>
+      <h1><%= title %></h1>
+      <% if (item_list && item_list.length > 0) { %>
+        <p>You need to delete the following items or change those item category before deleting this category:</p>
+        <ul>
+          <% item_list.map((item) => { %>
+            <li>
+              <a href="/item/<%= item.id %>"><%= `${item.name} by ${item.brand_name}` %></a>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>Do you really want to delete this category?</p>
+        <p><%= category.category_name %></p>
+        <form action="/category/<%= category.category_id %>/delete" method="POST">
+          <button type="submit">Confirm</button>
+        </form>
+      <% } %>
+    </div>
   </body>
 </html>

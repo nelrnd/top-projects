@@ -7,23 +7,23 @@
     <link rel="stylesheet" href="/styles/style.css" />
   </head>
   <body>
-    <%- include("navbar") %>
-    <h1><%= title %></h1>
-
-    <a href="/brand/new">Create a new brand</a>
-
-    <% if (brand_list && brand_list.length > 0) { %>
-      <ul>
-        <% brand_list.map((brand) => { %>
-          <li>
-            <a href="/brand/<%= brand.brand_id %>">
-              <%= brand.brand_name %>
-            </a>
-          </li>
-        <% }) %>
-      </ul>
-    <% } else { %>
-      <p>No brands for now...</p>
-    <% } %>
+    <div class="container">
+      <%- include("navbar") %>
+      <h1><%= title %></h1>
+      <a href="/brand/new">Create a new brand</a>
+      <% if (brand_list && brand_list.length > 0) { %>
+        <ul>
+          <% brand_list.map((brand) => { %>
+            <li>
+              <a href="/brand/<%= brand.brand_id %>">
+                <%= brand.brand_name %>
+              </a>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No brands for now...</p>
+      <% } %>
+    </div>
   </body>
 </html>

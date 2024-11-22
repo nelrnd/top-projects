@@ -7,33 +7,35 @@
     <link rel="stylesheet" href="/styles/style.css" />
   </head>
   <body>
-    <%- include("navbar") %>
-    <h1><%= item.name + " by " + item.brand_name %></h1>
-    <h2>Actions</h2>
-    <ul>
-      <li>
-        <a href="/item/<%= item.id %>/update">Update</a>
-      </li>
-      <li>
-        <a href="/item/<%= item.id %>/delete">Delete</a>
-      </li>
-    </ul>
-    <h2>Description</h2>
-    <p><%= item.description %></p>
-    <h2>Infos</h2>
-    <ul>
-      <li>Price: $<%= item.price_in_dollar %></li>
-      <li>Quantity in stock: <%= item.stock_quantity %></li>
-      <li>
-        Brand:
-        <a href="/brand/<%= item.brand_id %>"><%= item.brand_name %></a>
-      </li>
-      <li>
-        Category:
-        <a href="/category/<%= item.category_id %>"
-          ><%= item.category_name %></a
-        >
-      </li>
-    </ul>
+    <div class="container">
+      <%- include("navbar") %>
+      <h1><%= item.name + " by " + item.brand_name %></h1>
+      <h2>Actions</h2>
+      <ul>
+        <li>
+          <a href="/item/<%= item.id %>/update">Update</a>
+        </li>
+        <li>
+          <a href="/item/<%= item.id %>/delete">Delete</a>
+        </li>
+      </ul>
+      <h2>Description</h2>
+      <p><%= item.description %></p>
+      <h2>Infos</h2>
+      <ul>
+        <li>Price: $<%= item.price_in_dollar %></li>
+        <li>Quantity in stock: <%= item.stock_quantity %></li>
+        <li>
+          Brand:
+          <a href="/brand/<%= item.brand_id %>"><%= item.brand_name %></a>
+        </li>
+        <li>
+          Category:
+          <a href="/category/<%= item.category_id %>"
+            ><%= item.category_name %></a
+          >
+        </li>
+      </ul>
+    </div>
   </body>
 </html>

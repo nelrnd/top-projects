@@ -7,19 +7,19 @@
   <link rel="stylesheet" href="/styles/style.css" />
 </head>
 <body>
-  <%- include("navbar") %>
-  <h1><%= title %></h1>
-
-  <a href="/item/new">Create a new item</a>
-
-  <% if (item_list && item_list.length > 0) { %>
-    <ul>
-      <% item_list.map((item) => { %>
-        <li><a href="/item/<%= item.id %>"><%= `${item.name} by ${item.brand_name} (${item.category_name})` %></a></li>
-      <% }) %>
-    </ul>
-  <% } else { %>
-    <p>No items for now...</p>
-  <% } %>
+  <div class="container">
+    <%- include("navbar") %>
+    <h1><%= title %></h1>
+    <a href="/item/new">Create a new item</a>
+    <% if (item_list && item_list.length > 0) { %>
+      <ul>
+        <% item_list.map((item) => { %>
+          <li><a href="/item/<%= item.id %>"><%= `${item.name} by ${item.brand_name} (${item.category_name})` %></a></li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No items for now...</p>
+    <% } %>
+  </div>
 </body>
 </html>

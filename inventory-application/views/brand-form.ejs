@@ -12,21 +12,23 @@ const { brand_name, brand_description } = brand
     <link rel="stylesheet" href="/styles/style.css" />
   </head>
   <body>
-    <%- include("navbar") %>
-    <h1><%= title %></h1>
+    <div class="container">
+      <%- include("navbar") %>
+      <h1><%= title %></h1>
 
-    <form action="<%= locals.brand ? `/brand/${brand.brand_id}/update` : "/brand/new" %>" method="POST">
-      <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="<%= brand_name %>" required />
-      </div>
+      <form action="<%= locals.brand ? `/brand/${brand.brand_id}/update` : "/brand/new" %>" method="POST">
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" value="<%= brand_name %>" required />
+        </div>
 
-      <div>
-        <label for="desc">Description:</label>
-        <textarea id="desc" name="desc"><%= brand_description %></textarea>
-      </div>
+        <div>
+          <label for="desc">Description:</label>
+          <textarea id="desc" name="desc"><%= brand_description %></textarea>
+        </div>
 
-      <button type="submit"><%= title %>></button>
-    </form>
+        <button type="submit"><%= title %>></button>
+      </form>
+    </div>
   </body>
 </html>

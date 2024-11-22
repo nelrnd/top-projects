@@ -7,23 +7,23 @@
     <link rel="stylesheet" href="/styles/style.css" />
   </head>
   <body>
-    <%- include("navbar") %>
-    <h1><%= title %></h1>
-
-    <a href="/category/new">Create a new category</a>
-
-    <% if (category_list && category_list.length > 0) { %>
-      <ul>
-        <% category_list.map((category) => { %>
-          <li>
-            <a href="/category/<%= category.category_id %>">
-              <%= category.category_name %>
-            </a>
-          </li>
-        <% }) %>
-      </ul>
-    <% } else { %>
-      <p>No categories for now...</p>
-    <% } %>
+    <div class="container">
+      <%- include("navbar") %>
+      <h1><%= title %></h1>
+      <a href="/category/new">Create a new category</a>
+      <% if (category_list && category_list.length > 0) { %>
+        <ul>
+          <% category_list.map((category) => { %>
+            <li>
+              <a href="/category/<%= category.category_id %>">
+                <%= category.category_name %>
+              </a>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No categories for now...</p>
+      <% } %>
+    </div>
   </body>
 </html>
