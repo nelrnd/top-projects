@@ -6,7 +6,7 @@ exports.category_list = asyncHandler(async (req, res) => {
 })
 
 exports.category_create_get = asyncHandler(async (req, res) => {
-  console.log("category_create_get")
+  res.render("category-form", { title: "Create category" })
 })
 
 exports.category_create_post = asyncHandler(async (req, res) => {

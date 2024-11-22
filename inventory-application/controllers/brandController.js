@@ -6,7 +6,7 @@ exports.brand_list = asyncHandler(async (req, res) => {
 })
 
 exports.brand_create_get = asyncHandler(async (req, res) => {
-  console.log("brand_create_get")
+  res.render("brand-form", { title: "Create brand" })
 })
 
 exports.brand_create_post = asyncHandler(async (req, res) => {
