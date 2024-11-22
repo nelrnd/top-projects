@@ -8,6 +8,15 @@
   <body>
     <%- include("navbar") %>
     <h1><%= brand.brand_name %></h1>
+    <h2>Actions</h2>
+    <ul>
+      <li>
+        <a href="/brand/<%= brand.brand_id %>/update">Update</a>
+      </li>
+      <li>
+        <a href="/brand/<%= brand.brand_id %>/delete">Delete</a>
+      </li>
+    </ul>
     <h2>Description</h2>
     <p><%= brand.brand_description %></p>
 

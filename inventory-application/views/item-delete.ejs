@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> | MUSIC STORE</title>
+  </head>
+  <body>
+    <%- include("navbar") %>
+    <h1><%= title %></h1>
+    <p>Do you really want to delete this item?</p>
+
+    <p><%= `${item.name} by ${item.brand_name}` %></p>
+
+    <form action="/item/<%= item.id %>/delete" method="POST">
+      <button type="submit">Confirm</button>
+    </form>
+  </body>
+</html>

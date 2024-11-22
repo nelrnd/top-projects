@@ -45,10 +45,12 @@ exports.item_update_post = asyncHandler(async (req, res) => {
 
 exports.item_delete_get = asyncHandler(async (req, res) => {
   const { itemId } = req.params
-  console.log("item_delete_get")
+  const item = await db.getItemById(itemId)
+  res.render("item-delete", { title: "Delete item", item })
 })
 
 exports.item_delete_post = asyncHandler(async (req, res) => {
   const { itemId } = req.params
-  console.log("item_delete_post")
+  await db.deleteItem(itemId)
+  res.redirect("/")
 })
