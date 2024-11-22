@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= item.name + " by " + item.brand_name %> | MUSIC STORE</title>
+  </head>
+  <body>
+    <h1><%= item.name + " by " + item.brand_name %></h1>
+    <h2>Description</h2>
+    <p><%= item.description %></p>
+    <h2>Infos</h2>
+    <ul>
+      <li>Price: $<%= item.price_in_dollar %></li>
+      <li>Quantity in stock: <%= item.stock_quantity %></li>
+      <li>
+        Brand:
+        <a href="/brand/<%= item.brand_id %>"><%= item.brand_name %></a>
+      </li>
+      <li>
+        Category:
+        <a href="/category/<%= item.category_id %>"
+          ><%= item.category_name %></a
+        >
+      </li>
+    </ul>
+  </body>
+</html>

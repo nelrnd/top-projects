@@ -15,7 +15,8 @@ exports.item_create_post = asyncHandler(async (req, res) => {
 
 exports.item_detail = asyncHandler(async (req, res) => {
   const { itemId } = req.params
-  console.log("item_detail")
+  const item = await db.getItemById(itemId)
+  res.render("item", { item })
 })
 
 exports.item_update_get = asyncHandler(async (req, res) => {
