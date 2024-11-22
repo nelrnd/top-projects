@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %> | MUSIC STORE></title>
+    <link rel="stylesheet" href="/styles/style.css" />
   </head>
   <body>
     <%- include("navbar") %>
@@ -18,7 +19,7 @@
         <% }) %>
       </ul>
     <% } else { %>
-      <p>Do you really want to delete this brand?</p>
+      <p class="text-red-500">Do you really want to delete this brand?</p>
       <p><%= brand.brand_name %></p>
       <form action="/brand/<%= brand.brand_id %>/delete" method="POST">
         <button type="submit">Confirm</button>
