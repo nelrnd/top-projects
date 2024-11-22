@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> | MUSIC STORE</title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <a href="/brand/new">Create a new brand</a>
+
+    <% if (brand_list && brand_list.length > 0) { %>
+      <ul>
+        <% brand_list.map((brand) => { %>
+          <li>
+            <a href="/brand/<%= brand.id %>">
+              <%= brand.brand_name %>
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No brands for now...</p>
+    <% } %>
+  </body>
+</html>

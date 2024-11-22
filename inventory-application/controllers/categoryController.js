@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler")
 const db = require("../db/queries")
 
 exports.category_list = asyncHandler(async (req, res) => {
-  console.log("category_list")
+  res.render("category-list", { title: "Categories", category_list: [] })
 })
 
 exports.category_create_get = asyncHandler(async (req, res) => {
