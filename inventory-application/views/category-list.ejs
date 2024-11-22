@@ -9,13 +9,13 @@
   <body>
     <div class="container">
       <%- include("navbar") %>
-      <h1><%= title %></h1>
-      <a href="/category/new">Create a new category</a>
+      <h1 class="heading"><%= title %></h1>
+      <a href="/category/new" class="btn mb-6">Create a new category</a>
       <% if (category_list && category_list.length > 0) { %>
-        <ul>
+        <ul class="list-disc">
           <% category_list.map((category) => { %>
-            <li>
-              <a href="/category/<%= category.category_id %>">
+            <li class="ml-4">
+              <a href="/category/<%= category.category_id %>" class="link">
                 <%= category.category_name %>
               </a>
             </li>

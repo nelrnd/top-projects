@@ -14,20 +14,20 @@ const { brand_name, brand_description } = brand
   <body>
     <div class="container">
       <%- include("navbar") %>
-      <h1><%= title %></h1>
+      <h1 class="heading"><%= title %></h1>
 
-      <form action="<%= locals.brand ? `/brand/${brand.brand_id}/update` : "/brand/new" %>" method="POST">
+      <form action="<%= locals.brand ? `/brand/${brand.brand_id}/update` : "/brand/new" %>" method="POST" class="max-w-[24rem] flex flex-col gap-4">
         <div>
           <label for="name">Name:</label>
-          <input type="text" id="name" name="name" value="<%= brand_name %>" required />
+          <input type="text" id="name" name="name" value="<%= brand_name %>" required class="block w-full mt-1" />
         </div>
 
         <div>
           <label for="desc">Description:</label>
-          <textarea id="desc" name="desc"><%= brand_description %></textarea>
+          <textarea id="desc" name="desc" class="block w-full mt-1"><%= brand_description %></textarea>
         </div>
 
-        <button type="submit"><%= title %>></button>
+        <button type="submit" class="btn"><%= title %></button>
       </form>
     </div>
   </body>

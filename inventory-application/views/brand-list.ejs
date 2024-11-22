@@ -9,13 +9,13 @@
   <body>
     <div class="container">
       <%- include("navbar") %>
-      <h1><%= title %></h1>
-      <a href="/brand/new">Create a new brand</a>
+      <h1 class="heading"><%= title %></h1>
+      <a href="/brand/new" class="btn mb-6">Create a new brand</a>
       <% if (brand_list && brand_list.length > 0) { %>
-        <ul>
+        <ul class="list-disc">
           <% brand_list.map((brand) => { %>
-            <li>
-              <a href="/brand/<%= brand.brand_id %>">
+            <li class="ml-4">
+              <a href="/brand/<%= brand.brand_id %>" class="link">
                 <%= brand.brand_name %>
               </a>
             </li>

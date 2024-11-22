@@ -9,12 +9,12 @@
 <body>
   <div class="container">
     <%- include("navbar") %>
-    <h1><%= title %></h1>
-    <a href="/item/new">Create a new item</a>
+    <h1 class="heading"><%= title %></h1>
+    <a href="/item/new" class="btn mb-6">Create a new item</a>
     <% if (item_list && item_list.length > 0) { %>
-      <ul>
+      <ul class="list-disc">
         <% item_list.map((item) => { %>
-          <li><a href="/item/<%= item.id %>"><%= `${item.name} by ${item.brand_name} (${item.category_name})` %></a></li>
+          <li class="ml-4"><a href="/item/<%= item.id %>" class="link"><%= `${item.name} by ${item.brand_name} (${item.category_name})` %></a></li>
         <% }) %>
       </ul>
     <% } else { %>

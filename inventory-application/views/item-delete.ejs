@@ -9,11 +9,11 @@
   <body>
     <div class="container">
       <%- include("navbar") %>
-      <h1><%= title %></h1>
-      <p>Do you really want to delete this item?</p>
-      <p><%= `${item.name} by ${item.brand_name}` %></p>
+      <h1 class="heading"><%= title %></h1>
+      <p class="mb-2">Do you really want to delete this item?</p>
+      <p class="mb-4 font-bold"><%= `${item.name} by ${item.brand_name}` %></p>
       <form action="/item/<%= item.id %>/delete" method="POST">
-        <button type="submit">Confirm</button>
+        <button type="submit" class="btn btn-alert">Confirm</button>
       </form>
         </body>
     </div>

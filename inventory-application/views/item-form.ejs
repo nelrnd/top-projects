@@ -14,27 +14,27 @@ const { name, description, price_in_dollar, stock_quantity, category_id, brand_i
   <body>
     <div class="container">
       <%- include("navbar") %>
-      <h1><%= title %></h1>
-      <form action="<%= locals.item ? `/item/${item.id}/update` : "/item/new" %>" method="POST">
+      <h1 class="heading"><%= title %></h1>
+      <form action="<%= locals.item ? `/item/${item.id}/update` : "/item/new" %>" method="POST" class="max-w-[24rem] flex flex-col gap-4">
         <div>
           <label for="name">Name:</label>
-          <input type="text" id="name" name="name" value="<%= name %>" required />
+          <input type="text" id="name" name="name" value="<%= name %>" required class="block w-full mt-1" />
         </div>
         <div>
           <label for="desc">Description:</label>
-          <textarea id="desc" name="desc"><%= description %></textarea>
+          <textarea id="desc" name="desc" class="block w-full mt-1"><%= description %></textarea>
         </div>
         <div>
           <label for="price">Price (in $):</label>
-          <input type="number" id="price" name="price" value="<%= price_in_dollar %>" />
+          <input type="number" id="price" name="price" value="<%= price_in_dollar %>" class="block w-full mt-1" />
         </div>
         <div>
           <label for="quantity">Quantity in stock:</label>
-          <input type="number" id="quantity" name="quantity" value="<%= stock_quantity %>" />
+          <input type="number" id="quantity" name="quantity" value="<%= stock_quantity %>" class="block w-full mt-1" />
         </div>
         <div>
           <label for="category">Category:</label>
-          <select id="category" name="category">
+          <select id="category" name="category" class="block w-full mt-1">
             <% category_list.map((category) => { %>
               <option
               value="<%= category.category_id %>"
@@ -47,7 +47,7 @@ const { name, description, price_in_dollar, stock_quantity, category_id, brand_i
         </div>
         <div>
           <label for="brand">Brand:</label>
-          <select id="brand" name="brand">
+          <select id="brand" name="brand" class="block w-full mt-1">
             <% brand_list.map((brand) => { %>
               <option
               value="<%= brand.brand_id %>"
@@ -58,7 +58,7 @@ const { name, description, price_in_dollar, stock_quantity, category_id, brand_i
             <% }) %>
           </select>
         </div>
-        <button type="submit"><%= title %></button>
+        <button type="submit" class="btn"><%= title %></button>
       </form>
     </div>
   </body>
