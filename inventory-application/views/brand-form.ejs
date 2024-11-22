@@ -1,3 +1,8 @@
+<% 
+const brand = locals.brand || { brand_name: "", brand_description: ""} 
+const { brand_name, brand_description } = brand
+%>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -9,15 +14,15 @@
     <%- include("navbar") %>
     <h1><%= title %></h1>
 
-    <form action="/brand/new" method="POST">
+    <form action="<%= locals.brand ? `/brand/${brand.brand_id}/update` : "/brand/new" %>" method="POST">
       <div>
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required />
+        <input type="text" id="name" name="name" value="<%= brand_name %>" required />
       </div>
 
       <div>
         <label for="desc">Description:</label>
-        <textarea id="desc" name="desc"></textarea>
+        <textarea id="desc" name="desc"><%= brand_description %></textarea>
       </div>
 
       <button type="submit">Create</button>

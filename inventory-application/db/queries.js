@@ -21,7 +21,12 @@ async function getCategoryById(id) {
   return rows[0]
 }
 
-async function updateCategory(id, { name, desc }) {}
+async function updateCategory(id, { name, desc }) {
+  await pool.query(
+    "UPDATE categories SET category_name = $1, category_description = $2 WHERE category_id = $3",
+    [name, desc, id]
+  )
+}
 
 async function deleteCategory(id) {
   await pool.query("DELETE FROM categories WHERE category_id = $1", [id])
@@ -46,6 +51,13 @@ async function getBrandById(id) {
     [id]
   )
   return rows[0]
+}
+
+async function updateBrand(id, { name, desc }) {
+  await pool.query(
+    "UPDATE brands SET brand_name = $1, brand_description = $2 WHERE brand_id = $3",
+    [name, desc, id]
+  )
 }
 
 async function deleteBrand(id) {
@@ -109,10 +121,12 @@ module.exports = {
   createCategory,
   getAllCategories,
   getCategoryById,
+  updateCategory,
   deleteCategory,
   createBrand,
   getAllBrands,
   getBrandById,
+  updateBrand,
   deleteBrand,
   createItem,
   getAllItems,
