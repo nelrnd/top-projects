@@ -37,7 +37,15 @@ exports.category_update_post = asyncHandler(async (req, res) => {
 
 exports.category_delete_get = asyncHandler(async (req, res) => {
   const { categoryId } = req.params
-  console.log("category_delete_get")
+  const [category, item_list] = await Promise.all([
+    db.getCategoryById(categoryId),
+    db.getItemsByCategoryId(categoryId),
+  ])
+  res.render("category-delete", {
+    title: "Delete category",
+    category,
+    item_list,
+  })
 })
 
 exports.category_delete_post = asyncHandler(async (req, res) => {
