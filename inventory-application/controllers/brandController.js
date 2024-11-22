@@ -37,10 +37,20 @@ exports.brand_update_post = asyncHandler(async (req, res) => {
 
 exports.brand_delete_get = asyncHandler(async (req, res) => {
   const { brandId } = req.params
-  console.log("brand_delete_get")
+  const [brand, item_list] = await Promise.all([
+    db.getBrandById(brandId),
+    db.getItemsByBrandId(brandId),
+  ])
+  res.render("brand-delete", { title: "Delete brand", brand, item_list })
 })
 
 exports.brand_delete_post = asyncHandler(async (req, res) => {
   const { brandId } = req.params
-  console.log("brand_delete_post")
+  const item_list = await db.getItemsByBrandId(brandId)
+  if (item_list.length > 0) {
+    res.redirect(`/brand/${brandId}/delete`)
+    return
+  }
+  await db.deleteBrand(brandId)
+  res.redirect("/")
 })

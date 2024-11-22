@@ -46,6 +46,10 @@ async function getBrandById(id) {
   return rows[0]
 }
 
+async function deleteBrand(id) {
+  await pool.query("DELETE FROM brands WHERE brand_id = $1", [id])
+}
+
 async function createItem({ name, desc, price, quantity, category, brand }) {
   const { rows } = await pool.query(
     "INSERT INTO items (name, description, price_in_dollar, stock_quantity, category_id, brand_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;",
@@ -97,6 +101,7 @@ module.exports = {
   createBrand,
   getAllBrands,
   getBrandById,
+  deleteBrand,
   createItem,
   getAllItems,
   getItemsByCategoryId,
