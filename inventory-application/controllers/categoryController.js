@@ -13,7 +13,7 @@ exports.category_create_get = asyncHandler(async (req, res) => {
 exports.category_create_post = asyncHandler(async (req, res) => {
   const { name, desc } = req.body
   const category = await db.createCategory({ name, desc })
-  res.redirect(`/category/${category.id}`)
+  res.redirect(`/category/${category.category_id}`)
 })
 
 exports.category_detail = asyncHandler(async (req, res) => {

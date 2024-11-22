@@ -13,7 +13,7 @@ exports.brand_create_get = asyncHandler(async (req, res) => {
 exports.brand_create_post = asyncHandler(async (req, res) => {
   const { name, desc } = req.body
   const brand = await db.createBrand({ name, desc })
-  res.redirect(`/brand/${brand.id}`)
+  res.redirect(`/brand/${brand.brand_id}`)
 })
 
 exports.brand_detail = asyncHandler(async (req, res) => {

@@ -2,9 +2,14 @@ const pool = require("./pool")
 
 async function createCategory({ name, desc }) {
   await pool.query(
-    "INSERT INTO categories (category_name, category_desc) VALUES ($1, $2);",
+    "INSERT INTO categories (category_name, category_description) VALUES ($1, $2);",
     [name, desc]
   )
+  const { rows } = await pool.query(
+    "SELECT * FROM categories WHERE category_name = $1",
+    [name]
+  )
+  return rows[0]
 }
 
 async function getAllCategories() {
@@ -22,9 +27,14 @@ async function getCategoryById(id) {
 
 async function createBrand({ name, desc }) {
   await pool.query(
-    "INSERT INTO brands (brand_name, brand_desc) VALUES ($1, $2);",
+    "INSERT INTO brands (brand_name, brand_description) VALUES ($1, $2);",
     [name, desc]
   )
+  const { rows } = await pool.query(
+    "SELECT * FROM brands WHERE brand_name = $1",
+    [name]
+  )
+  return rows[0]
 }
 
 async function getAllBrands() {
