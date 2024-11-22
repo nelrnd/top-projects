@@ -1,4 +1,4 @@
-require("dotenv").config()
+const { argv } = require("node:process")
 const { Client } = require("pg")
 
 const SQL = `
@@ -54,7 +54,7 @@ INSERT INTO items (name, description, price_in_dollar, stock_quantity, category_
 async function main() {
   console.log("seedling...")
   const client = new Client({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: argv[2] || process.env.DATABASE_URL,
   })
   await client.connect()
   await client.query(SQL)
