@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= category.category_name %> | MUSIC STORE</title>
+  </head>
+  <body>
+    <h1><%= category.category_name %></h1>
+    <h2>Description</h2>
+    <p><%= category.category_description %></p>
+
+    <h2>Items (<%= item_list.length %>)</h2>
+    <% if (item_list.length > 0) { %>
+      <ul>
+        <% item_list.forEach((item) => { %>
+          <li>
+            <a href="/item/<%=item.id%>">
+              <%= item.brand_name + " | " + item.name %>
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No items for now...</p>
+    <% } %>
+  </body>
+</html>

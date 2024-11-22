@@ -18,7 +18,11 @@ exports.brand_create_post = asyncHandler(async (req, res) => {
 
 exports.brand_detail = asyncHandler(async (req, res) => {
   const { brandId } = req.params
-  console.log("brand_detail")
+  const [brand, item_list] = await Promise.all([
+    db.getBrandById(brandId),
+    db.getItemsByBrandId(brandId),
+  ])
+  res.render("brand", { brand, item_list })
 })
 
 exports.brand_update_get = asyncHandler(async (req, res) => {
