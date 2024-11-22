@@ -27,12 +27,15 @@ exports.brand_detail = asyncHandler(async (req, res) => {
 
 exports.brand_update_get = asyncHandler(async (req, res) => {
   const { brandId } = req.params
-  console.log("brand_update_get")
+  const brand = await db.getBrandById(brandId)
+  res.render("brand-form", { title: "Update brand", brand })
 })
 
 exports.brand_update_post = asyncHandler(async (req, res) => {
   const { brandId } = req.params
-  console.log("brand_update_post")
+  const { name, desc } = req.body
+  await db.updateBrand(brandId, { name, desc })
+  res.redirect(`/brand/${brandId}`)
 })
 
 exports.brand_delete_get = asyncHandler(async (req, res) => {
@@ -52,5 +55,5 @@ exports.brand_delete_post = asyncHandler(async (req, res) => {
     return
   }
   await db.deleteBrand(brandId)
-  res.redirect("/")
+  res.redirect("/brand")
 })

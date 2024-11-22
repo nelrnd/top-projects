@@ -27,12 +27,16 @@ exports.category_detail = asyncHandler(async (req, res) => {
 
 exports.category_update_get = asyncHandler(async (req, res) => {
   const { categoryId } = req.params
-  console.log("category_update_get")
+  const category = await db.getCategoryById(categoryId)
+  console.log(category)
+  res.render("category-form", { title: "Update category", category })
 })
 
 exports.category_update_post = asyncHandler(async (req, res) => {
   const { categoryId } = req.params
-  console.log("category_update_post")
+  const { name, desc } = req.body
+  await db.updateCategory(categoryId, { name, desc })
+  res.redirect(`/category/${categoryId}`)
 })
 
 exports.category_delete_get = asyncHandler(async (req, res) => {
@@ -56,5 +60,5 @@ exports.category_delete_post = asyncHandler(async (req, res) => {
     return
   }
   await db.deleteCategory(categoryId)
-  res.redirect("/")
+  res.redirect("/category")
 })
