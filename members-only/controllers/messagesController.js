@@ -42,3 +42,14 @@ exports.message_create_post = [
     res.redirect("/")
   }),
 ]
+
+exports.message_delete = [
+  usersController.user_is_admin,
+  asyncHandler(async (req, res) => {
+    const { messageId } = req.params
+    if (messageId) {
+      await db.deleteMessage(messageId)
+    }
+    res.redirect("/")
+  }),
+]

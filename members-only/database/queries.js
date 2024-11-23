@@ -31,6 +31,10 @@ exports.getAllMessages = async () => {
   return rows
 }
 
+exports.deleteMessage = async (messageId) => {
+  await pool.query("DELETE FROM messages WHERE message_id = $1", [messageId])
+}
+
 exports.joinClub = async (userId) => {
   await pool.query("UPDATE users SET is_member = TRUE WHERE user_id = $1;", [
     userId,

@@ -37,6 +37,12 @@
         </p>
         <p><%= locals.currentUser && currentUser.is_member ? new Date(message.timestamp).toLocaleDateString() : "Unknown date" %></p>
         <p><%= message.content %></p>
+
+        <% if (locals.currentUser && currentUser.is_admin) { %>
+          <form action="/message/<%=message.message_id%>/delete" method="POST">
+            <button type="submit">Delete this message</button>
+          </form>
+        <% } %>
       </article>
     <% }) %>
   </main>

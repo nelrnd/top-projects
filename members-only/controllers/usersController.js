@@ -21,6 +21,14 @@ exports.user_is_not_auth = user_is_not_auth = (req, res, next) => {
   next()
 }
 
+exports.user_is_admin = user_is_admin = (req, res, next) => {
+  if (!req.isAuthenticated() || !req.user.is_admin) {
+    res.redirect("/")
+    return
+  }
+  next()
+}
+
 exports.user_register_get = [
   user_is_not_auth,
   asyncHandler(async (req, res) => {
