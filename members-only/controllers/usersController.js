@@ -123,3 +123,12 @@ exports.user_login_post = [
     failureMessage: true,
   }),
 ]
+
+exports.user_logout = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err)
+    }
+    res.redirect("/")
+  })
+}
