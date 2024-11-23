@@ -23,3 +23,10 @@ exports.createMessage = async ({ title, content, user_id }) => {
     [title, content, timestamp, user_id]
   )
 }
+
+exports.getAllMessages = async () => {
+  const { rows } = await pool.query(
+    "SELECT messages.*, users.first_name, users.last_name FROM messages LEFT JOIN users ON messages.user_id = users.user_id ORDER BY timestamp DESC;"
+  )
+  return rows
+}

@@ -8,6 +8,7 @@
   <body>
     <h1>StoryClub</h1>
 
+    <nav>
     <% if (locals.currentUser) { %>
       <p>
         <a href="/create-message">Create a new message</a>
@@ -23,6 +24,22 @@
     <% } else { %>
       <p><a href="/sign-up">Create an account</a> or <a href="/log-in">log in</a></p>
     <% } %>
+  </nav>
+
+  <main>
+    <% messages.map((message) => { %>
+      <article>
+        <h2><%= message.title %></h2>
+        <p>By 
+          <strong>
+            <%= locals.currentUser ? currentUser.user_id === message.user_id ? "you" : currentUser.is_member ? `${message.first_name} ${message.last_name}` : "some club members" : "some club members" %>
+          </strong>
+        </p>
+        <p><%= locals.currentUser && currentUser.is_member ? new Date(message.timestamp).toLocaleDateString() : "Unknown date" %></p>
+        <p><%= message.content %></p>
+      </article>
+    <% }) %>
+  </main>
 
   </body>
 </html>
