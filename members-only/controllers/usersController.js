@@ -5,9 +5,28 @@ const db = require("../database/queries")
 const pool = require("../database/pool")
 const passport = require("passport")
 
-exports.user_register_get = asyncHandler(async (req, res) => {
-  res.render("sign-up", { title: "Sign up" })
-})
+exports.user_is_auth = user_is_auth = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    res.redirect("/log-in")
+    return
+  }
+  next()
+}
+
+exports.user_is_not_auth = user_is_not_auth = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    res.redirect("/")
+    return
+  }
+  next()
+}
+
+exports.user_register_get = [
+  user_is_not_auth,
+  asyncHandler(async (req, res) => {
+    res.render("sign-up", { title: "Sign up" })
+  }),
+]
 
 const registerValidation = [
   body("first_name")
@@ -75,13 +94,7 @@ exports.user_register_post = [
 ]
 
 exports.user_login_get = [
-  (req, res, next) => {
-    if (req.isAuthenticated()) {
-      res.redirect("/")
-      return
-    }
-    next()
-  },
+  user_is_not_auth,
   asyncHandler(async (req, res) => {
     const errors =
       req.session.messages && req.session.messages.map((msg) => ({ msg }))
