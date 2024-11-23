@@ -34,5 +34,6 @@ app.use((req, res, next) => {
 
 app.use(require("./routes/indexRouter"))
 app.use(require("./routes/usersRouter"))
+app.use(require("./routes/messagesRouter"))
 
 app.listen(PORT, console.log(`app running at http://localhost:${PORT}`))

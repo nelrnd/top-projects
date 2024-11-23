@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> | StoryClub></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <% if (locals.errors && errors.length > 0) { %>
+      <ul>
+        <% errors.map((error) => { %>
+          <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>  
+
+    <form action="/create-message" method="POST">
+      <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" />
+      </div>
+      <div>
+        <label for="msg">Message:</label>
+        <textarea id="msg" name="content"></textarea>
+      </div>
+      <button type="submit">Create message</button>
+    </form>
+  </body>
+</html>
