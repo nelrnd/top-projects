@@ -29,7 +29,6 @@ const verifyCallback = async (email, password, done) => {
 passport.use(new LocalStrategy(customFields, verifyCallback))
 
 passport.serializeUser((user, done) => {
-  console.log(user)
   done(null, user.user_id)
 })
 

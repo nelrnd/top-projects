@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> | StoryClub></title>
+  </head>
+  <body>
+    <h1>StoryClub</h1>
+
+    <% if (locals.currentUser) { %>
+      <p>
+        <a href="/create-message">Create a new message</a>
+      </p>
+      <% if (!currentUser.is_member) { %>
+        <p>
+          <a href="/join-club">Join the club</a>
+        </p>
+      <% } %>
+      <p>
+        <a href="/log-out">Log out</a>
+      </p>
+    <% } else { %>
+      <p><a href="/sign-up">Create an account</a> or <a href="/log-in">log in</a></p>
+    <% } %>
+
+  </body>
+</html>
