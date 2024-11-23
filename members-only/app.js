@@ -32,6 +32,6 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get("/", (req, res) => res.send("Hello?"))
+app.use("/", require("./routes/usersRouter"))
 
 app.listen(PORT, console.log(`app running at http://localhost:${PORT}`))

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> | StoryClub</title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <% if (locals.errors) { %>
+      <ul>
+        <% errors.map((error) => { %>
+          <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <form action="/sign-up" method="POST">
+      <div>
+        <label for="fn">First name:</label>
+        <input type="text" id="fn" name="first_name" />
+      </div>
+      <div>
+        <label for="ln">Last name:</label>
+        <input type="text" id="ln" name="last_name" />
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" />
+      </div>
+      <div>
+        <label for="pwd">Password:</label>
+        <input type="password" id="pwd" name="password" />
+      </div>
+      <div>
+        <label for="pwd-confirm">Confirm password:</label>
+        <input type="password" id="pwd-confirm" name="password_confirm" />
+      </div>
+      <button type="submit"><%= title %></button>
+    </form>
+  </body>
+</html>
