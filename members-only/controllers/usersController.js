@@ -168,3 +168,26 @@ exports.join_club_post = [
     })
   }),
 ]
+
+exports.become_admin_get = [
+  user_is_auth,
+  (req, res) => {
+    res.render("join-admin", { title: "Become an admin" })
+  },
+]
+
+exports.become_admin_post = [
+  user_is_auth,
+  asyncHandler(async (req, res) => {
+    const match = req.body.password === process.env.ADMIN_PASSWORD
+    if (match) {
+      await db.becomeAdmin(req.user.user_id)
+      res.redirect("/")
+      return
+    }
+    res.render("join-admin", {
+      title: "Join the club",
+      errors: [{ msg: "Admin password is incorrect" }],
+    })
+  }),
+]

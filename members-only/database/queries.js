@@ -36,3 +36,9 @@ exports.joinClub = async (userId) => {
     userId,
   ])
 }
+
+exports.becomeAdmin = async (userId) => {
+  await pool.query("UPDATE users SET is_admin = TRUE WHERE user_id = $1;", [
+    userId,
+  ])
+}

@@ -7,8 +7,6 @@
 </head>
 <body>
   <h1><%= title %></h1>
-  <p>So you wanna join the club? Enter the secret passcode.</p>
-
   <% if (locals.errors && errors.length > 0) { %>
     <ul>
       <% errors.map((error) => { %>
@@ -17,12 +15,12 @@
     </ul>
   <% } %>
 
-  <form action="/join-club" method="POST">
+  <form action="/become-admin" method="POST">
     <div>
-      <label for="passcode">Secret passcode:</label>
-      <input type="password" id="passcode" name="secret_passcode" />
+      <label for="pwd">Admin password:</label>
+      <input type="password" id="passcode" name="password" />
     </div>
-    <button type="submit">Join club</button>
+    <button type="submit">Become admin</button>
   </form>
 </body>
 </html>

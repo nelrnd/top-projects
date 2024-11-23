@@ -17,4 +17,8 @@ router.get("/join-club", usersController.join_club_get)
 
 router.post("/join-club", usersController.join_club_post)
 
+router.get("/become-admin", usersController.become_admin_get)
+
+router.post("/become-admin", usersController.become_admin_post)
+
 module.exports = router
