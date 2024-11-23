@@ -8,7 +8,7 @@
   <body>
     <h1><%= title %></h1>
 
-    <% if (locals.errors) { %>
+    <% if (locals.errors && errors.length > 0) { %>
       <ul>
         <% errors.map((error) => { %>
           <li><%= error.msg %></li>

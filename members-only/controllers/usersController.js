@@ -3,6 +3,7 @@ const { body, validationResult } = require("express-validator")
 const bcrypt = require("bcryptjs")
 const db = require("../database/queries")
 const pool = require("../database/pool")
+const passport = require("passport")
 
 exports.user_register_get = asyncHandler(async (req, res) => {
   res.render("sign-up", { title: "Sign up" })
@@ -70,5 +71,55 @@ exports.user_register_post = [
       password: hashedPassword,
     })
     res.redirect("/log-in")
+  }),
+]
+
+exports.user_login_get = [
+  (req, res, next) => {
+    if (req.isAuthenticated()) {
+      res.redirect("/")
+      return
+    }
+    next()
+  },
+  asyncHandler(async (req, res) => {
+    const errors =
+      req.session.messages && req.session.messages.map((msg) => ({ msg }))
+    req.session.messages = undefined
+    res.render("log-in", { title: "Log in", errors })
+  }),
+]
+
+const loginValidation = [
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Email is required")
+    .isLength({ max: 200 })
+    .withMessage("Email cannot exceed 200 characters")
+    .isEmail()
+    .withMessage("Email format is incorrect"),
+  body("password")
+    .trim()
+    .notEmpty()
+    .withMessage("Password is required")
+    .isLength({ max: 200 })
+    .withMessage("Password cannot exceed 200 characters"),
+]
+
+exports.user_login_post = [
+  loginValidation,
+  (req, res, next) => {
+    const result = validationResult(req)
+    if (!result.isEmpty()) {
+      res.render("log-in", { title: "Log in", errors: result.array() })
+      return
+    }
+    next()
+  },
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/log-in",
+    failureMessage: true,
   }),
 ]
