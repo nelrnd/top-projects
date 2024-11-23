@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | StoryClub</title>
+</head>
+<body>
+  <h1><%= title %></h1>
+  <p>So you wanna join the club? Enter the secret passcode.</p>
+
+  <% if (locals.errors && errors.length > 0) { %>
+    <ul>
+      <% errors.map((error) => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <form action="/join-club" method="POST">
+    <div>
+      <label for="passcode">Secret passcode:</label>
+      <input type="text" id="passcode" name="secret_passcode" />
+    </div>
+    <button type="submit">Join club</button>
+  </form>
+</body>
+</html>

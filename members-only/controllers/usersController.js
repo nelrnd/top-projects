@@ -145,3 +145,26 @@ exports.user_logout = (req, res, next) => {
     res.redirect("/")
   })
 }
+
+exports.join_club_get = [
+  user_is_auth,
+  (req, res) => {
+    res.render("join-club", { title: "Join the club" })
+  },
+]
+
+exports.join_club_post = [
+  user_is_auth,
+  asyncHandler(async (req, res) => {
+    const match = req.body.secret_passcode === process.env.SECRET_PASSCODE
+    if (match) {
+      await db.joinClub(req.user.user_id)
+      res.redirect("/")
+      return
+    }
+    res.render("join-club", {
+      title: "Join the club",
+      errors: [{ msg: "Passcode is incorrect" }],
+    })
+  }),
+]

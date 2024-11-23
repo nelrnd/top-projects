@@ -13,4 +13,8 @@ router.post("/log-in", usersController.user_login_post)
 
 router.get("/log-out", usersController.user_logout)
 
+router.get("/join-club", usersController.join_club_get)
+
+router.post("/join-club", usersController.join_club_post)
+
 module.exports = router

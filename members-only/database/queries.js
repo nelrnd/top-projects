@@ -30,3 +30,9 @@ exports.getAllMessages = async () => {
   )
   return rows
 }
+
+exports.joinClub = async (userId) => {
+  await pool.query("UPDATE users SET is_member = TRUE WHERE user_id = $1;", [
+    userId,
+  ])
+}
