@@ -8,6 +8,14 @@
   <body>
     <h1><%= title %></h1>
 
+    <% if (locals.errors) { %>
+      <ul>
+        <% errors.map((error) => { %>
+          <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
     <form method="POST">
       <div>
         <label for="name">Full name:</label>
