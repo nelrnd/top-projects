@@ -107,3 +107,12 @@ exports.auth_register_post = [
     res.redirect("/login")
   }),
 ]
+
+exports.auth_logout = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err)
+    }
+    res.redirect("/")
+  })
+}

@@ -10,9 +10,14 @@
 
     <p>File upload platform.</p>
 
-    <p>
-      You can <a href="/login">log in</a> or
-      <a href="/register">create an account</a>.
-    </p>
+    <% if (locals.currentUser) { %>
+      <p><a href="/logout">Log out</a></p>
+    <% } else { %>
+      <p>
+        You can <a href="/login">log in</a> or
+        <a href="/register">create an account</a>.
+      </p>
+    <% } %>
+
   </body>
 </html>
