@@ -26,6 +26,11 @@ require("./config/passport")
 
 app.use(passport.session())
 
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user
+  next()
+})
+
 app.use("/", require("./routes/indexRouter"))
 app.use("/", require("./routes/authRouter"))
 
