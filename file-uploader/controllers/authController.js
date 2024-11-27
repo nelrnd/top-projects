@@ -1,13 +1,39 @@
 const asyncHandler = require("express-async-handler")
 const { body, validationResult } = require("express-validator")
 const bcrypt = require("bcryptjs")
+const passport = require("passport")
 const prisma = require("../prisma/prisma")
 
 exports.auth_login_get = (req, res) => {
-  res.render("login", { title: "Login" })
+  const messages = req.session.messages
+  const errors = messages && messages.map((msg) => ({ msg }))
+  req.session.messages = undefined
+  res.render("login", { title: "Log in", errors })
 }
 
-exports.auth_login_post = (req, res) => {}
+const loginValidation = [
+  body("email").trim().notEmpty().withMessage("Email is required"),
+  body("password").trim().notEmpty().withMessage("Password is required"),
+]
+
+exports.auth_login_post = [
+  loginValidation,
+  (req, res, next) => {
+    const result = validationResult(req)
+
+    if (!result.isEmpty()) {
+      res.render("login", { title: "Log in", errors: result.array() })
+      return
+    }
+
+    next()
+  },
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureMessage: true,
+  }),
+]
 
 exports.auth_register_get = (req, res) => {
   res.render("register", { title: "Create an account" })
