@@ -1,5 +1,7 @@
+const asyncHandler = require("express-async-handler")
 const multer = require("multer")
 const upload = multer({ dest: "uploaded_files/" })
+const prisma = require("../prisma/prisma")
 
 exports.file_upload_get = (req, res) => {
   res.render("upload", { title: "Upload a file" })
@@ -7,8 +9,23 @@ exports.file_upload_get = (req, res) => {
 
 exports.file_upload_post = [
   upload.single("file"),
-  (req, res) => {
-    console.log(req.file)
+  asyncHandler(async (req, res) => {
+    const file = req.file
+    if (!file) {
+      res.redirect("/file/upload")
+      return
+    }
+
+    await prisma.file.create({
+      data: {
+        name: file.originalname,
+        mimetype: file.mimetype,
+        size: file.size,
+        path: file.path,
+        userId: req.user.id,
+      },
+    })
+
     res.redirect("/")
-  },
+  }),
 ]

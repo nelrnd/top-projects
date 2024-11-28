@@ -18,6 +18,17 @@ model User {
   name     String
   email    String @unique
   password String
+  files    File[]
+}
+
+model File {
+  id       Int    @id @default(autoincrement())
+  name     String
+  mimetype String @db.VarChar(25)
+  size     Int
+  path     String
+  user     User   @relation(fields: [userId], references: [id])
+  userId   Int
 }
 
 model Session {
