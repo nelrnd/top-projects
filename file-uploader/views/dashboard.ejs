@@ -23,7 +23,7 @@
     <h1><%= title %></h1>
     <p>Welcome back <%= currentUser.name %></p>
 
-    <p><a href="/folder/create">Create folder</a></p>
+    <p><a href="/folder/<%= locals.currentFolder.id %>/create">Create folder</a></p>
     <p><a href="/file/upload">Upload file</a></p>
     <p><a href="/logout">Log out</a></p>
 
@@ -38,7 +38,7 @@
         </tr>
       </thead>
       <tbody>
-        <% locals.files.map((file) => { %>
+        <% locals.currentFolder.files.map((file) => { %>
           <tr>
             <td><%= file.name %></td>
             <td><%= file.type %></td>

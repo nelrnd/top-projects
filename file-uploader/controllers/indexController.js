@@ -1,7 +1,7 @@
-const fileController = require("./fileController")
+const folderController = require("./folderController")
 
 exports.home_get = [
-  fileController.file_get_user_files,
+  folderController.folder_get_user_root_folder,
   (req, res) => {
     if (req.isAuthenticated()) {
       res.render("dashboard", { title: "Dashboard" })
