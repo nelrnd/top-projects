@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> | FileUploader</title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <p><a href="/folder/<%= backFolderId %>">Go back</a></p>
+
+    <p>
+      Do you really want to delete this folder? Doing so will permanently delete
+      all folders and files located in this folder.
+    </p>
+
+    <form method="POST">
+      <button type="submit">Confirm</button>
+    </form>
+  </body>
+</html>

@@ -1,3 +1,4 @@
+const { unlink } = require("node:fs/promises")
 const asyncHandler = require("express-async-handler")
 const { body, validationResult } = require("express-validator")
 const prisma = require("../prisma/prisma")
@@ -155,5 +156,44 @@ exports.folder_update_post = [
     })
 
     res.redirect(`/folder/${folderId}`)
+  }),
+]
+
+exports.folder_delete_get = [
+  authController.auth_is_auth,
+  folder_get_folder,
+  (req, res) => {
+    const { folderId } = req.params
+    res.render("folder-delete", {
+      title: "Delete folder",
+      backFolderId: folderId,
+    })
+  },
+]
+
+exports.folder_delete_post = [
+  authController.auth_is_auth,
+  folder_get_folder,
+  asyncHandler(async (req, res) => {
+    const folderId = Number(req.params.folderId)
+
+    async function deleteFolder(folderId) {
+      const folder = await prisma.folder.findUnique({
+        where: { id: folderId },
+        include: { folders: true, files: true },
+      })
+
+      folder.folders.forEach((folder) => deleteFolder(folder.id))
+
+      await Promise.all([
+        ...folder.files.map(async (file) => await unlink(file.path)),
+        prisma.file.deleteMany({ where: { parentFolderId: folder.id } }),
+        prisma.folder.delete({ where: { id: folderId } }),
+      ])
+    }
+
+    await deleteFolder(folderId)
+
+    res.redirect(`/folder/${res.locals.currentFolder.parentFolderId}`)
   }),
 ]

@@ -13,4 +13,8 @@ router.get("/:folderId/update", folderController.folder_update_get)
 
 router.post("/:folderId/update", folderController.folder_update_post)
 
+router.get("/:folderId/delete", folderController.folder_delete_get)
+
+router.post("/:folderId/delete", folderController.folder_delete_post)
+
 module.exports = router
