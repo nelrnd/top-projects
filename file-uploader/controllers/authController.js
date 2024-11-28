@@ -123,6 +123,7 @@ exports.auth_register_post = [
         email,
         name,
         password: hashedPassword,
+        folders: { create: { name: "Main", isRoot: true } },
       },
     })
 

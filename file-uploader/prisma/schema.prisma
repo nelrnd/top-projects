@@ -14,26 +14,24 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  name       String
-  email      String   @unique
-  password   String
-  folders    Folder[] @relation("Folders")
-  rootFolder Folder?  @relation("RootFolder")
-  files      File[]
+  id       Int      @id @default(autoincrement())
+  name     String
+  email    String   @unique
+  password String
+  folders  Folder[]
+  files    File[]
 }
 
 model Folder {
   id             Int      @id @default(autoincrement())
   name           String
-  user           User     @relation("Folders", fields: [userId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
   userId         Int
-  rootOf         User?    @relation("RootFolder", fields: [rootOfId], references: [id])
-  rootOfId       Int?     @unique
   parentFolder   Folder?  @relation("ParentFolder", fields: [parentFolderId], references: [id])
   parentFolderId Int?
   folders        Folder[] @relation("ParentFolder")
   files          File[]
+  isRoot         Boolean  @default(false)
   createdAt      DateTime @default(now())
 }
 
