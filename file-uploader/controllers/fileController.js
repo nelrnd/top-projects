@@ -24,7 +24,7 @@ exports.file_upload_post = [
     await prisma.file.create({
       data: {
         name: file.originalname,
-        mimetype: file.mimetype,
+        type: file.mimetype,
         size: file.size,
         path: file.path,
         userId: req.user.id,

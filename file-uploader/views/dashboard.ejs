@@ -4,6 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %> | FileUploader</title>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: .5rem 1rem;
+      }
+      th {
+        text-align: left;
+      }
+      tr {
+        border-bottom: solid 1px rgba(0, 0, 0, 0.2)
+      }
+    </style>
   </head>
   <body>
     <h1><%= title %></h1>
@@ -12,10 +26,27 @@
     <p><a href="/file/upload">Upload a file</a></p>
     <p><a href="/logout">Log out</a></p>
 
-    <ul>
-      <% locals.files.map((file) => { %>
-        <li><a href="/file/<%= file.id %>/download"><%= file.name %></a></li>
-      <% }) %>
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Size</th>
+          <th>Added at</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% locals.files.map((file) => { %>
+          <tr>
+            <td><%= file.name %></td>
+            <td><%= file.type %></td>
+            <td><%= file.size < 1000 ? file.size + " B" : file.size < 1000000 ? Math.floor(file.size / 1000) + " KB" : Math.floor(file.size / 1000000) + " MB" %></td>
+            <td><%= new Date(file.addedAt).toLocaleString() %></td>
+            <td><a href="/file/<%= file.id %>/download">Download</a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
   </body>
 </html>

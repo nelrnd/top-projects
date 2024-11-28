@@ -22,14 +22,14 @@ model User {
 }
 
 model File {
-  id       Int      @id @default(autoincrement())
-  name     String
-  mimetype String   @db.VarChar(25)
-  size     Int
-  path     String
-  user     User     @relation(fields: [userId], references: [id])
-  userId   Int
-  addedAt  DateTime @default(now())
+  id      Int      @id @default(autoincrement())
+  name    String
+  type    String   @db.VarChar(25)
+  size    Int
+  path    String
+  user    User     @relation(fields: [userId], references: [id])
+  userId  Int
+  addedAt DateTime @default(now())
 }
 
 model Session {
