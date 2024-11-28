@@ -1,5 +1,6 @@
 <% if (!currentFolder.isRoot) { %>
   <p><a href="/folder/<%= currentFolder.parentFolderId %>">Go back</a></p>
+  <p><a href="/folder/<%= currentFolder.id %>/update">Edit folder</a></p>
 <% } %>
 <p><a href="/folder/create?folder=<%= currentFolder.id %>">Create folder</a></p>
 <p><a href="/file/upload?folder=<%= currentFolder.id %>">Upload file</a></p>

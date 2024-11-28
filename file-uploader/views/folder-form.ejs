@@ -8,7 +8,7 @@
   <body>
     <h1><%= title %></h1>
 
-    <p><a href="<%= locals.parentFolderId ? `/folder/${parentFolderId}` : "/" %>">Go back</a></p>
+    <p><a href="<%= locals.backFolderId ? `/folder/${backFolderId}` : "/" %>">Go back</a></p>
 
     <% if (locals.errors) { %>
       <ul>
@@ -21,9 +21,13 @@
     <form method="POST">
       <div>
         <label for="name">Folder name:</label>
-        <input type="text" id="name" name="name" required />
+        <% if (locals.currentFolder) { %>
+          <input type="text" id="name" name="name" value="<%= currentFolder.name %>" required />
+        <% } else { %>
+          <input type="text" id="name" name="name" required />
+        <% } %>
       </div>
-      <button type="submit">Create folder</button>
+      <button type="submit"><%= buttonText %></button>
     </form>
   </body>
 </html>

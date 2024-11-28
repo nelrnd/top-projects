@@ -9,7 +9,8 @@ exports.folder_create_get = [
     const { folder } = req.query
     res.render("folder-form", {
       title: "Create a new folder",
-      parentFolderId: folder,
+      buttonText: "Create",
+      backFolderId: folder,
     })
   },
 ]
@@ -70,7 +71,8 @@ exports.folder_create_post = [
 
 exports.folder_get_folder = folder_get_folder = asyncHandler(
   async (req, res, next) => {
-    const { folderId } = req.params
+    let { folderId } = req.params
+
     let folder
 
     if (!folderId) {
@@ -114,5 +116,44 @@ exports.folder_detail = [
     } else {
       res.render("folder", { title: currentFolder.name })
     }
+  }),
+]
+
+exports.folder_update_get = [
+  authController.auth_is_auth,
+  folder_get_folder,
+  (req, res) => {
+    const { folderId } = req.params
+    res.render("folder-form", {
+      title: "Edit folder",
+      buttonText: "Save",
+      backFolderId: folderId,
+    })
+  },
+]
+
+exports.folder_update_post = [
+  authController.auth_is_auth,
+  folder_get_folder,
+  createFolderValidation,
+  asyncHandler(async (req, res) => {
+    const result = validationResult(req)
+    const { folderId } = req.params
+    if (!result.isEmpty()) {
+      res.render("folder-form", {
+        title: "Edit folder",
+        buttonText: "Save",
+        backFolderId: folderId,
+        errors: result.array(),
+      })
+      return
+    }
+
+    await prisma.folder.update({
+      where: { id: Number(folderId) },
+      data: { name: req.body.name },
+    })
+
+    res.redirect(`/folder/${folderId}`)
   }),
 ]

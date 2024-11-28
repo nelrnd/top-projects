@@ -9,4 +9,8 @@ router.post("/create", folderController.folder_create_post)
 
 router.get("/:folderId", folderController.folder_detail)
 
+router.get("/:folderId/update", folderController.folder_update_get)
+
+router.post("/:folderId/update", folderController.folder_update_post)
+
 module.exports = router
