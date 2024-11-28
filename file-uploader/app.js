@@ -40,6 +40,7 @@ app.use((req, res, next) => {
 
 app.use("/", require("./routes/indexRouter"))
 app.use("/", require("./routes/authRouter"))
+app.use("/file", require("./routes/fileRouter"))
 
 app.listen(PORT, () =>
   console.log(`server started at http://localhost:${PORT}`)

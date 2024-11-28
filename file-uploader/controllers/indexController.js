@@ -1,3 +1,7 @@
 exports.home_get = (req, res) => {
-  res.render("index", { title: "Home" })
+  if (req.isAuthenticated()) {
+    res.render("dashboard", { title: "Dashboard" })
+  } else {
+    res.render("index", { title: "Home" })
+  }
 }

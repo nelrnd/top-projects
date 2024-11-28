@@ -3,16 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %> | FileUploader></title>
+    <title><%= title %> | FileUploader</title>
   </head>
   <body>
     <h1><%= title %></h1>
+    <p>Welcome back <%= currentUser.name %></p>
 
-    <p>File upload platform.</p>
-
-    <p>
-      You can <a href="/login">log in</a> or
-      <a href="/register">create an account</a>.
-    </p>
+    <p><a href="/file/upload">Upload a file</a></p>
+    <p><a href="/logout">Log out</a></p>
   </body>
 </html>
