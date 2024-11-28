@@ -7,4 +7,6 @@ router.get("/upload", fileController.file_upload_get)
 
 router.post("/upload", fileController.file_upload_post)
 
+router.get("/:fileId/download", fileController.file_download)
+
 module.exports = router

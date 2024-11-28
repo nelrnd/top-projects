@@ -37,3 +37,18 @@ exports.file_get_user_files = asyncHandler(async (req, res, next) => {
   }
   next()
 })
+
+exports.file_download = asyncHandler(async (req, res) => {
+  let { fileId } = req.params
+  fileId = Number(fileId)
+  const file = await prisma.file.findUnique({ where: { id: fileId } })
+  if (!file) {
+    // render not found
+    return
+  }
+  if (file.userId !== req.user.id) {
+    // render unauthorized
+    return
+  }
+  res.download(file.path, file.name)
+})

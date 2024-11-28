@@ -14,7 +14,7 @@
 
     <ul>
       <% locals.files.map((file) => { %>
-        <li><%= file.name %></li>
+        <li><a href="/file/<%= file.id %>/download"><%= file.name %></a></li>
       <% }) %>
     </ul>
   </body>
