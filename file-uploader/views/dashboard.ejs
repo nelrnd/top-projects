@@ -11,5 +11,11 @@
 
     <p><a href="/file/upload">Upload a file</a></p>
     <p><a href="/logout">Log out</a></p>
+
+    <ul>
+      <% locals.files.map((file) => { %>
+        <li><%= file.name %></li>
+      <% }) %>
+    </ul>
   </body>
 </html>

@@ -29,3 +29,11 @@ exports.file_upload_post = [
     res.redirect("/")
   }),
 ]
+
+exports.file_get_user_files = asyncHandler(async (req, res, next) => {
+  if (req.isAuthenticated()) {
+    const files = await prisma.file.findMany({ where: { userId: req.user.id } })
+    res.locals.files = files
+  }
+  next()
+})
