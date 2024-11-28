@@ -8,11 +8,11 @@
   <body>
     <h1><%= title %></h1>
 
+    <p><a href="<%= locals.parentFolderId ? `/folder/${parentFolderId}` : "/" %>">Go back</a></p>
+
     <form method="POST" enctype="multipart/form-data">
       <input type="file" name="file" required />
       <button type="submit">Upload file</button>
     </form>
-
-    <p><a href="/">Go back home</a></p>
   </body>
 </html>

@@ -1,10 +1,18 @@
 const asyncHandler = require("express-async-handler")
 const { body, validationResult } = require("express-validator")
 const prisma = require("../prisma/prisma")
+const authController = require("./authController")
 
-exports.folder_create_get = (req, res) => {
-  res.render("folder-create", { title: "Create a new folder" })
-}
+exports.folder_create_get = [
+  authController.auth_is_auth,
+  (req, res) => {
+    const { folder } = req.query
+    res.render("folder-form", {
+      title: "Create a new folder",
+      parentFolderId: folder,
+    })
+  },
+]
 
 const createFolderValidation = [
   body("name")
@@ -16,57 +24,95 @@ const createFolderValidation = [
 ]
 
 exports.folder_create_post = [
+  authController.auth_is_auth,
   createFolderValidation,
   asyncHandler(async (req, res) => {
     const result = validationResult(req)
     if (!result.isEmpty()) {
-      res.render("folder-create", {
+      res.render("folder-form", {
         title: "Create a new folder",
         errors: result.array(),
       })
       return
     }
 
-    let { parentFolderId } = req.params
-    parentFolderId = Number(parentFolderId)
+    const parentFolderId = Number(req.query.folder)
+
+    if (!parentFolderId) {
+      // must provide parent folder id
+      return
+    }
 
     const parentFolder = await prisma.folder.findUnique({
       where: { id: parentFolderId },
     })
 
     if (!parentFolder) {
-      // not found
+      // parent folder not found
       return
-    }
-    if (parentFolder.userId !== req.user.id) {
-      // not authorized
+    } else if (parentFolder.userId !== req.user.id) {
+      // unauthorized
       return
     }
 
-    const folder = await prisma.folder.create({
+    await prisma.folder.create({
       data: {
+        parentFolderId,
         name: req.body.name,
         userId: req.user.id,
       },
     })
 
-    res.redirect(`/folder/${folder.id}`)
+    const redirectUrl = parentFolder.isRoot ? "/" : `/folder/${parentFolder.id}`
+    res.redirect(redirectUrl)
   }),
 ]
 
-exports.folder_get_user_root_folder = asyncHandler(async (req, res, next) => {
-  if (req.isAuthenticated()) {
-    const folder = await prisma.folder.findFirst({
-      where: { userId: req.user.id, isRoot: true },
-      include: { folders: true, files: true },
-    })
+exports.folder_get_folder = folder_get_folder = asyncHandler(
+  async (req, res, next) => {
+    const { folderId } = req.params
+    let folder
+
+    if (!folderId) {
+      if (!req.isAuthenticated()) {
+        next()
+        return
+      }
+      // root folder
+      folder = await prisma.folder.findFirst({
+        where: { userId: req.user.id, isRoot: true },
+        include: { folders: true, files: true },
+      })
+    } else {
+      folder = await prisma.folder.findUnique({
+        where: { id: Number(folderId) },
+        include: { folders: true, files: true },
+      })
+    }
 
     if (!folder) {
-      // not found
+      console.log("not found")
+      return
+    } else if (folder.userId !== req.user.id) {
+      console.log("not authorized")
       return
     }
 
     res.locals.currentFolder = folder
+    next()
   }
-  next()
-})
+)
+
+exports.folder_detail = [
+  authController.auth_is_auth,
+  folder_get_folder,
+  asyncHandler(async (req, res) => {
+    const { currentFolder } = res.locals
+
+    if (currentFolder.isRoot) {
+      res.redirect("/")
+    } else {
+      res.render("folder", { title: currentFolder.name })
+    }
+  }),
+]

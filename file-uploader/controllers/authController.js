@@ -39,12 +39,10 @@ exports.auth_login_post = [
   loginValidation,
   (req, res, next) => {
     const result = validationResult(req)
-
     if (!result.isEmpty()) {
       res.render("login", { title: "Log in", errors: result.array() })
       return
     }
-
     next()
   },
   passport.authenticate("local", {
@@ -105,7 +103,6 @@ exports.auth_register_post = [
   registerValidation,
   asyncHandler(async (req, res) => {
     const result = validationResult(req)
-
     if (!result.isEmpty()) {
       res.render("register", {
         title: "Create an account",
@@ -115,7 +112,6 @@ exports.auth_register_post = [
     }
 
     const { email, name, password } = req.body
-
     const hashedPassword = bcrypt.hashSync(password, 10)
 
     await prisma.user.create({

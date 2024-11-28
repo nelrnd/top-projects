@@ -7,7 +7,11 @@ const authController = require("./authController")
 exports.file_upload_get = [
   authController.auth_is_auth,
   (req, res) => {
-    res.render("upload", { title: "Upload a file" })
+    const { folder } = req.query
+    res.render("file-form", {
+      title: "Upload a new file",
+      parentFolderId: folder,
+    })
   },
 ]
 
@@ -16,8 +20,27 @@ exports.file_upload_post = [
   upload.single("file"),
   asyncHandler(async (req, res) => {
     const file = req.file
+
     if (!file) {
-      res.redirect("/file/upload")
+      res.redirect(req.originalUrl)
+      return
+    }
+
+    const parentFolderId = Number(req.query.folder)
+
+    if (!parentFolderId) {
+      // parent folder not found
+      return
+    }
+
+    const parentFolder = await prisma.folder.findUnique({
+      where: { id: parentFolderId },
+    })
+
+    if (!parentFolder) {
+      console.log("not found")
+    } else if (parentFolder.userId !== req.user.id) {
+      console.log("not authorized")
       return
     }
 
@@ -28,10 +51,38 @@ exports.file_upload_post = [
         size: file.size,
         path: file.path,
         userId: req.user.id,
+        parentFolderId: parentFolder.id,
       },
     })
 
-    res.redirect("/")
+    const redirectUrl = parentFolder.isRoot ? "/" : `/folder/${parentFolder.id}`
+    res.redirect(redirectUrl)
+  }),
+]
+
+exports.file_upload = [
+  authController.auth_is_auth,
+  upload.single("file"),
+  asyncHandler(async (req, res) => {
+    const file = req.file
+    const { parentFolderId } = req.body
+
+    if (!parentFolderId) {
+      res.redirect("/")
+    } else if (!file) {
+      res.redirect(`/folder/${parentFolderId}`)
+    }
+
+    await prisma.file.create({
+      data: {
+        parentFolderId,
+        name: file.originalname,
+        type: file.mimetype,
+        size: file.size,
+        path: file.path,
+        userId: req.user.id,
+      },
+    })
   }),
 ]
 

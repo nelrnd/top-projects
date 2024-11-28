@@ -1,0 +1,36 @@
+<% if (!currentFolder.isRoot) { %>
+  <p><a href="/folder/<%= currentFolder.parentFolderId %>">Go back</a></p>
+<% } %>
+<p><a href="/folder/create?folder=<%= currentFolder.id %>">Create folder</a></p>
+<p><a href="/file/upload?folder=<%= currentFolder.id %>">Upload file</a></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Created at / Added at</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% currentFolder.folders.map((folder) => { %>
+      <tr>
+        <td><a href="/folder/<%= folder.id %>"><%= folder.name %></a></td>
+        <td>folder</td>
+        <td></td>
+        <td><%= new Date(folder.createdAt).toLocaleString() %></td>
+      </tr>
+    <% }) %>
+    <% currentFolder.files.map((file) => { %>
+      <tr>
+        <td><%= file.name %></td>
+        <td><%= file.type %></td>
+        <td><%= file.size < 1000 ? file.size + " B" : file.size < 1000000 ? Math.floor(file.size / 1000) + " KB" : Math.floor(file.size / 1000000) + " MB" %></td>
+        <td><%= new Date(file.addedAt).toLocaleString() %></td>
+        <td><a href="/file/<%= file.id %>/download">Download</a></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

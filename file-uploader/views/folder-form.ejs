@@ -8,14 +8,22 @@
   <body>
     <h1><%= title %></h1>
 
+    <p><a href="<%= locals.parentFolderId ? `/folder/${parentFolderId}` : "/" %>">Go back</a></p>
+
+    <% if (locals.errors) { %>
+      <ul>
+        <% errors.map((error) => { %>
+          <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
     <form method="POST">
       <div>
         <label for="name">Folder name:</label>
-        <input type="name" id="name" name="name" required />
+        <input type="text" id="name" name="name" required />
       </div>
       <button type="submit">Create folder</button>
     </form>
-
-    <p><a href="/">Go back home</a></p>
   </body>
 </html>

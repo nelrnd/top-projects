@@ -21,8 +21,6 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Welcome back <%= currentUser.name %></p>
-    <p><a href="/logout">Log out</a></p>
     <%- include("folder-table", { currentFolder: locals.currentFolder }) %>
   </body>
 </html>
