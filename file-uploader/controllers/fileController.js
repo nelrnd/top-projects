@@ -1,8 +1,11 @@
 const asyncHandler = require("express-async-handler")
 const multer = require("multer")
-const upload = multer({ dest: "uploaded_files/" })
+const storage = multer.memoryStorage()
+const upload = multer({ storage })
 const prisma = require("../prisma/prisma")
 const authController = require("./authController")
+const { decode } = require("base64-arraybuffer")
+const supabase = require("../config/supabase")
 
 exports.file_upload_get = [
   authController.auth_is_auth,
@@ -44,6 +47,23 @@ exports.file_upload_post = [
       return
     }
 
+    const fileBase64 = decode(file.buffer.toString("base64"))
+
+    const { data, error } = await supabase.storage
+      .from("file-uploader-bucket")
+      .upload(file.originalname, fileBase64, { contentType: file.mimetype })
+
+    if (error) {
+      throw error
+    }
+
+    const { data: uploadedFile } = supabase.storage
+      .from("file-uploader-bucket")
+      .getPublicUrl(data.path)
+
+    console.log(uploadedFile.publicUrl)
+
+    /*
     await prisma.file.create({
       data: {
         name: file.originalname,
@@ -57,6 +77,7 @@ exports.file_upload_post = [
 
     const redirectUrl = parentFolder.isRoot ? "/" : `/folder/${parentFolder.id}`
     res.redirect(redirectUrl)
+    */
   }),
 ]
 
