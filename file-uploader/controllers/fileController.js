@@ -1,3 +1,7 @@
+const path = require("path")
+const { createWriteStream } = require("fs")
+const { unlink } = require("fs/promises")
+const { Readable } = require("stream")
 const asyncHandler = require("express-async-handler")
 const multer = require("multer")
 const storage = multer.memoryStorage()
@@ -6,6 +10,8 @@ const prisma = require("../prisma/prisma")
 const authController = require("./authController")
 const { decode } = require("base64-arraybuffer")
 const supabase = require("../config/supabase")
+const { finished } = require("stream/promises")
+const { v4: uuidv4 } = require("uuid")
 
 exports.file_upload_get = [
   authController.auth_is_auth,
@@ -61,15 +67,12 @@ exports.file_upload_post = [
       .from("file-uploader-bucket")
       .getPublicUrl(data.path)
 
-    console.log(uploadedFile.publicUrl)
-
-    /*
     await prisma.file.create({
       data: {
         name: file.originalname,
         type: file.mimetype,
         size: file.size,
-        path: file.path,
+        path: uploadedFile.publicUrl,
         userId: req.user.id,
         parentFolderId: parentFolder.id,
       },
@@ -77,33 +80,6 @@ exports.file_upload_post = [
 
     const redirectUrl = parentFolder.isRoot ? "/" : `/folder/${parentFolder.id}`
     res.redirect(redirectUrl)
-    */
-  }),
-]
-
-exports.file_upload = [
-  authController.auth_is_auth,
-  upload.single("file"),
-  asyncHandler(async (req, res) => {
-    const file = req.file
-    const { parentFolderId } = req.body
-
-    if (!parentFolderId) {
-      res.redirect("/")
-    } else if (!file) {
-      res.redirect(`/folder/${parentFolderId}`)
-    }
-
-    await prisma.file.create({
-      data: {
-        parentFolderId,
-        name: file.originalname,
-        type: file.mimetype,
-        size: file.size,
-        path: file.path,
-        userId: req.user.id,
-      },
-    })
   }),
 ]
 
@@ -121,6 +97,16 @@ exports.file_download = [
       // render unauthorized
       return
     }
-    res.download(file.path, file.name)
+
+    const data = await fetch(file.path)
+    const dest = path.resolve("./uploaded_files", uuidv4())
+    const fileStream = createWriteStream(dest, { flags: "wx" })
+    await finished(Readable.fromWeb(data.body).pipe(fileStream))
+
+    res.download(dest, file.name)
+
+    setTimeout(async () => {
+      await unlink(dest)
+    }, 3000)
   }),
 ]
