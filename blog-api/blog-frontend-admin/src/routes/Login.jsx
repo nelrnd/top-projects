@@ -1,7 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "../axios"
+import { useAuth } from "../providers/AuthProvider"
+import { useNavigate } from "react-router-dom"
 
 export default function Login() {
+  const navigate = useNavigate()
+  const { token, setToken } = useAuth()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
@@ -11,13 +15,14 @@ export default function Login() {
     const formData = new FormData(event.target)
     const data = Object.fromEntries(formData)
     try {
-      const res = await axios.post("/users/login", data)
-      const { token } = res.data
-      const user = await axios.get("/users/me", {
+      const loginRes = await axios.post("/users/login", data)
+      const { token } = loginRes.data
+      const userRes = await axios.get("/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       })
+      const user = userRes.data
       if (user.role === "ADMIN") {
-        console.log("do the thing")
+        setToken(token)
       } else {
         setError("User is not admin")
       }
@@ -30,6 +35,12 @@ export default function Login() {
     setLoading(false)
   }
 
+  useEffect(() => {
+    if (token) {
+      navigate("/")
+    }
+  }, [token])
+
   return (
     <div>
       <h1>Login</h1>
@@ -37,7 +48,7 @@ export default function Login() {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" />
+          <input type="email" name="email" autoFocus />
         </div>
         <div>
           <label htmlFor="password">Password</label>
