@@ -1,19 +1,12 @@
-import { useEffect, useState } from "react"
-import axios from "../axios"
 import PostCard from "./PostCard"
+import useFetch from "../hooks/useFetch"
 
 export default function PostList() {
-  const [posts, setPosts] = useState([])
+  const [posts, loading] = useFetch("/posts")
 
-  console.log(posts)
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await axios.get("/posts")
-      setPosts(res.data)
-    }
-    fetchPosts()
-  }, [])
+  if (loading) {
+    return <p>Loading...</p>
+  }
 
   return (
     <div>
