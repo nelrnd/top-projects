@@ -7,11 +7,7 @@ router.post("/", postsController.createPost)
 
 router.get("/", postsController.getAllPosts)
 
-router.get(
-  "/:postId",
-  postsController.incrementPostViewCount,
-  postsController.getPostById
-)
+router.get("/:postId", postsController.getPostById)
 
 router.put("/:postId", postsController.updatePost)
 

@@ -1,22 +1,25 @@
 const asyncHandler = require("express-async-handler")
 const prisma = require("../prisma/client")
+const usersController = require("./usersController")
 
-exports.createComment = asyncHandler(async (req, res) => {
-  const { postId } = req.params
-  // check if post exist
-  const post = await prisma.post.findUnique({ where: { id: +postId } })
-  if (!post) {
-    return res.status(404).json({ message: "Post not found" })
-  }
-  const comment = await prisma.comment.create({
-    data: {
-      content: req.body.content,
-      userId: req.user.id,
-      postId: +postId,
-    },
-  })
-  res.json(comment)
-})
+exports.createComment = [
+  usersController.verifyUser,
+  asyncHandler(async (req, res) => {
+    const { postId } = req.params
+    const post = await prisma.post.findUnique({ where: { id: +postId } })
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" })
+    }
+    const comment = await prisma.comment.create({
+      data: {
+        content: req.body.content,
+        userId: req.user.id,
+        postId: +postId,
+      },
+    })
+    res.json(comment)
+  }),
+]
 
 exports.getAllCommentsFromPost = asyncHandler(async (req, res) => {
   const { postId } = req.params
@@ -40,10 +43,24 @@ exports.getCommentByIdFromPost = asyncHandler(async (req, res) => {
   res.json(comment)
 })
 
-exports.deleteComment = asyncHandler(async (req, res) => {
-  const { postId, commentId } = req.params
-  const deleteComment = await prisma.comment.delete({
-    where: { id: +commentId, postId: +postId },
-  })
-  res.json(deleteComment)
-})
+exports.deleteComment = [
+  verifyUser,
+  asyncHandler(async (req, res) => {
+    const { postId, commentId } = req.params
+    const comment = await prisma.comment.findUnique({
+      where: { id: +commentId, postId: +postId },
+    })
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" })
+    }
+    if (req.user.id !== comment.userId && req.user.role !== "ADMIN") {
+      return res.status(401).json({
+        message: "Cannot delete comment: must be admin or comment author",
+      })
+    }
+    const deleteComment = await prisma.comment.delete({
+      where: { id: +commentId, postId: +postId },
+    })
+    res.json(deleteComment)
+  }),
+]

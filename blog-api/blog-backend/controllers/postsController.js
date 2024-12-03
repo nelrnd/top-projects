@@ -1,16 +1,20 @@
 const asyncHandler = require("express-async-handler")
 const prisma = require("../prisma/client")
+const usersController = require("./usersController")
 
-exports.createPost = asyncHandler(async (req, res) => {
-  const post = await prisma.post.create({
-    data: {
-      title: req.body.title,
-      content: req.body.content,
-      published: req.body.published,
-    },
-  })
-  res.json(post)
-})
+exports.createPost = [
+  usersController.verifyAdmin,
+  asyncHandler(async (req, res) => {
+    const post = await prisma.post.create({
+      data: {
+        title: req.body.title,
+        content: req.body.content,
+        published: req.body.published,
+      },
+    })
+    res.json(post)
+  }),
+]
 
 exports.getAllPosts = asyncHandler(async (req, res) => {
   const posts = await prisma.post.findMany()
@@ -26,24 +30,30 @@ exports.getPostById = asyncHandler(async (req, res) => {
   res.json(post)
 })
 
-exports.updatePost = asyncHandler(async (req, res, next) => {
-  const { postId } = req.params
-  const updatePost = await prisma.post.update({
-    where: { id: +postId },
-    data: {
-      title: req.body.title,
-      content: req.body.content,
-      published: req.body.published,
-    },
-  })
-  res.json(updatePost)
-})
+exports.updatePost = [
+  usersController.verifyAdmin,
+  asyncHandler(async (req, res, next) => {
+    const { postId } = req.params
+    const updatePost = await prisma.post.update({
+      where: { id: +postId },
+      data: {
+        title: req.body.title,
+        content: req.body.content,
+        published: req.body.published,
+      },
+    })
+    res.json(updatePost)
+  }),
+]
 
-exports.deletePost = asyncHandler(async (req, res, next) => {
-  const { postId } = req.params
-  const deletePost = await prisma.post.delete({ where: { id: +postId } })
-  res.json(deletePost)
-})
+exports.deletePost = [
+  usersController.verifyAdmin,
+  asyncHandler(async (req, res, next) => {
+    const { postId } = req.params
+    const deletePost = await prisma.post.delete({ where: { id: +postId } })
+    res.json(deletePost)
+  }),
+]
 
 exports.incrementPostViewCount = asyncHandler(async (req, res, next) => {
   const { postId } = req.params
