@@ -23,7 +23,7 @@ exports.verifyUser = verifyUser = [
   asyncHandler(async (req, res, next) => {
     const user = await prisma.user.findUnique({
       where: { id: req.userId },
-      select: { password: false },
+      omit: { password: true },
     })
     if (!user) {
       return res.status(401).json({ message: "No user found with this token" })

@@ -23,7 +23,6 @@ exports.createComment = [
 
 exports.getAllCommentsFromPost = asyncHandler(async (req, res) => {
   const { postId } = req.params
-  console.log(postId)
   const comments = await prisma.comment.findMany({
     where: { postId: +postId },
     include: { user: { select: { id: true, name: true, email: true } } },
