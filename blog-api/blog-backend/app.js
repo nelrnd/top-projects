@@ -1,13 +1,17 @@
 require("dotenv").config()
 const express = require("express")
+const postsRouter = require("./routes/postsRouter")
+const commentsRouter = require("./routes/commentsRouter")
+const usersRouter = require("./routes/usersRouter")
 
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-app.use("/api/posts", require("./routes/postsRouter"))
-app.use("/api/users", require("./routes/usersRouter"))
+postsRouter.use("/:postId/comments", commentsRouter)
+app.use("/api/posts", postsRouter)
+app.use("/api/users", usersRouter)
 
 app.use((err, req, res, next) => {
   console.log(err)
