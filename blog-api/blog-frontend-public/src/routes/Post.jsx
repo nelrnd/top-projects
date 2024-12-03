@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import axios from "../axios"
+import CommentList from "../components/CommentList"
 
 export default function Post() {
   const { postId } = useParams()
@@ -22,6 +23,8 @@ export default function Post() {
     <div>
       <h1>{post.title}</h1>
       <p>{post.content}</p>
+
+      <CommentList />
     </div>
   )
 }

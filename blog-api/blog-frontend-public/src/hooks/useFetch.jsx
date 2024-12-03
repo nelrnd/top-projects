@@ -11,6 +11,7 @@ export default function useFetch(uri) {
       setValue(res.data)
       setLoading(false)
     }
+    fetch()
   }, [])
 
   return [value, loading]
