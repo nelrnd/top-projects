@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
+import { useAuth } from "../providers/authProvider"
 
 export default function NavBar() {
+  const { isAuth } = useAuth()
+
   return (
     <nav>
       <ul>
@@ -11,7 +14,11 @@ export default function NavBar() {
           <Link to="/posts">Posts</Link>
         </li>
         <li>
-          <Link to="/login">Login</Link>
+          {isAuth ? (
+            <Link to="/logout">Logout</Link>
+          ) : (
+            <Link to="/login">Login</Link>
+          )}
         </li>
       </ul>
     </nav>

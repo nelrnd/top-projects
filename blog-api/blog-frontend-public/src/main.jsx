@@ -8,6 +8,7 @@ import Post from "./routes/Post.jsx"
 import AuthProvider from "./providers/authProvider.jsx"
 import Login from "./routes/Login.jsx"
 import Register from "./routes/Register.jsx"
+import Logout from "./routes/Logout.jsx"
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/logout",
+        element: <Logout />,
       },
     ],
   },
