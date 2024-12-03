@@ -1,7 +1,10 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 import axios from "../axios"
+import { useAuth } from "../providers/authProvider"
 
 export default function Register() {
+  const { token } = useAuth()
+
   const navigate = useNavigate()
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -13,6 +16,10 @@ export default function Register() {
     } catch (err) {
       console.error(err)
     }
+  }
+
+  if (token) {
+    return <Navigate to="/" replace={true} />
   }
 
   return (

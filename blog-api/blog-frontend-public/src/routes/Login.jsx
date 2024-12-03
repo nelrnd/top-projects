@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 import axios from "../axios"
 import { useAuth } from "../providers/authProvider"
 
 export default function Login() {
-  const { setToken } = useAuth()
+  const { token, setToken } = useAuth()
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -16,6 +16,10 @@ export default function Login() {
     } catch (err) {
       console.error(err)
     }
+  }
+
+  if (token) {
+    return <Navigate to="/" replace={true} />
   }
 
   return (
