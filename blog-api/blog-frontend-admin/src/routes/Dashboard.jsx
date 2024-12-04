@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import PostList from "../components/PostList"
 
 export default function Dashboard() {
   return (
@@ -10,6 +11,8 @@ export default function Dashboard() {
       <p>
         <Link to="/posts/new">Create new post</Link>
       </p>
+
+      <PostList />
     </div>
   )
 }
