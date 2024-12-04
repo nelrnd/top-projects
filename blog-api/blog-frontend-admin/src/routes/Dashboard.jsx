@@ -7,6 +7,9 @@ export default function Dashboard() {
       <p>
         <Link to="/logout">Logout</Link>
       </p>
+      <p>
+        <Link to="/posts/new">Create new post</Link>
+      </p>
     </div>
   )
 }

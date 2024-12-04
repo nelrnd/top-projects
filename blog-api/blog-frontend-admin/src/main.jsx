@@ -6,6 +6,7 @@ import ProtectedRoute from "./routes/ProtectedRoute"
 import AuthProvider from "./providers/AuthProvider"
 import Dashboard from "./routes/Dashboard"
 import Logout from "./routes/Logout"
+import NewPost from "./routes/NewPost"
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/logout",
         element: <Logout />,
+      },
+      {
+        path: "/posts/new",
+        element: <NewPost />,
       },
     ],
   },
