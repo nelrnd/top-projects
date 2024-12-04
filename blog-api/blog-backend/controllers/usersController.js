@@ -25,6 +25,7 @@ exports.verifyUser = verifyUser = [
       where: { id: req.userId },
       omit: { password: true },
     })
+    console.log(user)
     if (!user) {
       return res.status(401).json({ message: "No user found with this token" })
     }
@@ -38,7 +39,7 @@ exports.verifyAdmin = verifyAdmin = [
   asyncHandler(async (req, res, next) => {
     const user = await prisma.user.findUnique({
       where: { id: req.userId },
-      select: { password: false },
+      omit: { password: false },
     })
     if (!user) {
       return res.status(401).json({ message: "Invalid token" })
