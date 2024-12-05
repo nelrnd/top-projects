@@ -50,7 +50,10 @@ exports.deletePost = [
   usersController.verifyAdmin,
   asyncHandler(async (req, res, next) => {
     const { postId } = req.params
-    const deletePost = await prisma.post.delete({ where: { id: +postId } })
+    const [deleteComments, deletePost] = await prisma.$transaction([
+      prisma.comment.deleteMany({ where: { postId: +postId } }),
+      prisma.post.delete({ where: { id: +postId } }),
+    ])
     res.json(deletePost)
   }),
 ]
