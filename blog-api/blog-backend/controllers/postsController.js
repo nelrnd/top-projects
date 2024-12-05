@@ -17,13 +17,15 @@ exports.createPost = [
 ]
 
 exports.getAllPosts = asyncHandler(async (req, res) => {
-  const posts = await prisma.post.findMany()
+  const posts = await prisma.post.findMany({ where: { published: true } })
   res.json(posts)
 })
 
 exports.getPostById = asyncHandler(async (req, res) => {
   const { postId } = req.params
-  const post = await prisma.post.findUnique({ where: { id: +postId } })
+  const post = await prisma.post.findUnique({
+    where: { id: +postId, published: true },
+  })
   if (!post) {
     return res.status(404).json({ message: "Post not found" })
   }

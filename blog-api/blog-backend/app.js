@@ -4,6 +4,7 @@ const cors = require("cors")
 const postsRouter = require("./routes/postsRouter")
 const commentsRouter = require("./routes/commentsRouter")
 const usersRouter = require("./routes/usersRouter")
+const adminRouter = require("./routes/adminRouter")
 
 const app = express()
 
@@ -14,6 +15,7 @@ app.use(cors())
 postsRouter.use("/:postId/comments", commentsRouter)
 app.use("/api/posts", postsRouter)
 app.use("/api/users", usersRouter)
+app.use("/api/admin", adminRouter)
 
 app.use((err, req, res, next) => {
   console.log(err)
