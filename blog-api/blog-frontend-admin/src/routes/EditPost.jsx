@@ -6,7 +6,7 @@ import useFetch from "../hooks/useFetch"
 export default function EditPost() {
   const navigate = useNavigate()
   const { postId } = useParams()
-  const [post, loading] = useFetch(`/posts/${postId}`)
+  const [post, loading] = useFetch(`/admin/posts/${postId}`)
   const [formLoading, setFormLoading] = useState(false)
 
   const handleSubmit = async (event) => {

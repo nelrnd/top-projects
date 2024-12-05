@@ -8,12 +8,19 @@ export default function useFetch(uri) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(uri)
-      const data = res.data
-      setData(data)
-      setLoading(false)
+      try {
+        const res = await axios.get(uri)
+        const data = res.data
+        setData(data)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
     }
-    fetchData()
+    setTimeout(() => {
+      fetchData()
+    }, 0)
   }, [uri])
 
   return [data, loading]

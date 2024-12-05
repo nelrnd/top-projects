@@ -2,7 +2,7 @@ import useFetch from "../hooks/useFetch"
 import PostCard from "./PostCard"
 
 export default function PostList() {
-  const [posts, loading] = useFetch("/posts")
+  const [posts, loading] = useFetch("/admin/posts")
 
   let content
 

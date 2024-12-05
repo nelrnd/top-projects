@@ -5,7 +5,7 @@ import useFetch from "../hooks/useFetch"
 export default function DeletePost() {
   const navigate = useNavigate()
   const { postId } = useParams()
-  const [post, loading] = useFetch(`/posts/${postId}`)
+  const [post, loading] = useFetch(`/admin/posts/${postId}`)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -22,7 +22,7 @@ export default function DeletePost() {
       <h1>Delete post</h1>
 
       {loading ? (
-        <p>Loading</p>
+        <p>Loading...</p>
       ) : !post ? (
         <p>Post not found</p>
       ) : (
