@@ -8,6 +8,7 @@ import Dashboard from "./routes/Dashboard"
 import Logout from "./routes/Logout"
 import NewPost from "./routes/NewPost"
 import DeletePost from "./routes/DeletePost"
+import EditPost from "./routes/EditPost"
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/posts/new",
         element: <NewPost />,
+      },
+      {
+        path: "/posts/:postId/edit",
+        element: <EditPost />,
       },
       {
         path: "/posts/:postId/delete",
