@@ -7,6 +7,7 @@ import AuthProvider from "./providers/AuthProvider"
 import Dashboard from "./routes/Dashboard"
 import Logout from "./routes/Logout"
 import NewPost from "./routes/NewPost"
+import DeletePost from "./routes/DeletePost"
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/posts/new",
         element: <NewPost />,
+      },
+      {
+        path: "/posts/:postId/delete",
+        element: <DeletePost />,
       },
     ],
   },
